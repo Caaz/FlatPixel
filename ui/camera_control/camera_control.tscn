@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7q43fwr5nuds"]
+
+[ext_resource type="Script" path="res://ui/camera_control/camera_control.gd" id="1_u1soe"]
+
+[node name="CameraControl" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u1soe")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Model Rotation"
+
+[node name="ModelRotationSlider" type="HSlider" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -180.0
+max_value = 180.0
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Camera Offset"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="XSpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="YSpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/ModelRotationSlider" to="." method="_on_model_rotation_slider_value_changed"]
+[connection signal="changed" from="PanelContainer/VBoxContainer/HBoxContainer/XSpinBox" to="." method="_on_cam_offset_changed"]
+[connection signal="changed" from="PanelContainer/VBoxContainer/HBoxContainer/YSpinBox" to="." method="_on_cam_offset_changed"]

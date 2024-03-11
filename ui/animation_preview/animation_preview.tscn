@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckry5jyr4ps3o"]
+
+[ext_resource type="Script" path="res://ui/animation_preview/animation_preview.gd" id="1_pa5ka"]
+
+[node name="AnimationPreview" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pa5ka")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="AnimationSelector" type="OptionButton" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="PauseButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/AnimationSelector" to="." method="_on_animation_selector_item_selected"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/PauseButton" to="." method="_on_pause_button_pressed"]
