@@ -18,19 +18,20 @@ func load_model(path: String):
 	return model_scene
 
 func _preprocess_model(node: Node):
+	_preprocess_step(node)
+	node.set_script(preload("res://model_manager/capture_model.gd"))
+	return node
+
+func _preprocess_step(node: Node):
 	# Recursive descent processing
 	for child in node.get_children():
-		_preprocess_model(child)
+		_preprocess_step(child)
 	
 	if node is MeshInstance3D:
 		for i in range(node.mesh.get_surface_count()):
 			var temp_mat: BaseMaterial3D = node.mesh.surface_get_material(i).duplicate(true) as BaseMaterial3D
 			temp_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 			node.set_surface_override_material(i, temp_mat)
-	
-	node.set_script(preload("res://model_manager/capture_model.gd"))
-	
-	return node
 
 func set_model_animation(animation: String):
 	model_scene.play_animation(animation)

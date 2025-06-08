@@ -1,15 +1,27 @@
 extends Control
 
-@onready var model_root = %ModelRoot
-@onready var camera = %Camera3D
+@onready var world = %World
+@onready var simulation = %SimulationWorld
+@onready var viewport_view = %ViewportView
+
+var preview_dummy: CaptureModel
 
 func set_model(node: Node3D):
-	for n in model_root.get_children():
-		n.queue_free()
-	model_root.add_child(node)
+	preview_dummy = node.duplicate() as CaptureModel
+	simulation.set_model(preview_dummy)
+	return preview_dummy
 
-func set_model_rotation(rot: float):
-	model_root.rotation_degrees = rot
+func set_camera_settings(settings: CameraSettings):
+	simulation.set_camera_settings(settings)
 
-func set_camera_offset(x: float, y: float):
-	camera.global_position = Vector3(x, y, 2)
+func set_render_settings(settings: RenderSettings):
+	world.size = settings.resolution
+	simulation.set_render_settings(settings)
+
+func set_animation_settings(settings: AnimationSettings):
+	preview_dummy.play_animation(settings.current_animation)
+	if not settings.is_playing:
+		preview_dummy.pause_animation()
+
+func get_viewport_image() -> Image:
+	return (viewport_view.texture as ViewportTexture).get_image()

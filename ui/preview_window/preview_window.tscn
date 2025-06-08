@@ -1,18 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b88sbvecfhnlq"]
+[gd_scene load_steps=4 format=3 uid="uid://b88sbvecfhnlq"]
 
-[ext_resource type="Script" path="res://ui/preview_window/preview_window.gd" id="1_dyury"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7sre2"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_givli"]
-sky_material = SubResource("ProceduralSkyMaterial_7sre2")
-
-[sub_resource type="Environment" id="Environment_p0a44"]
-background_mode = 2
-sky = SubResource("Sky_givli")
-tonemap_mode = 2
+[ext_resource type="Script" uid="uid://ypv2bato426m" path="res://ui/preview_window/preview_window.gd" id="1_dyury"]
+[ext_resource type="PackedScene" uid="uid://wi7nghb5ua8u" path="res://model_manager/simulation_world.tscn" id="2_8jm15"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pnwus"]
 viewport_path = NodePath("World")
@@ -27,28 +16,25 @@ grow_vertical = 2
 script = ExtResource("1_dyury")
 
 [node name="World" type="SubViewport" parent="."]
-
-[node name="Camera3D" type="Camera3D" parent="World"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+own_world_3d = true
+transparent_bg = true
+size = Vector2i(64, 64)
 
-[node name="ModelRoot" type="Node3D" parent="World"]
+[node name="SimulationWorld" parent="World" instance=ExtResource("2_8jm15")]
 unique_name_in_owner = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
-environment = SubResource("Environment_p0a44")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
-
-[node name="ViewportView" type="TextureRect" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ViewportView" type="TextureRect" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 texture = SubResource("ViewportTexture_pnwus")
 expand_mode = 1
 stretch_mode = 5

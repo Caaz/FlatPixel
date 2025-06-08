@@ -1,4 +1,5 @@
-extends Node
+class_name CaptureModel
+extends Node3D
 
 var animation_player: AnimationPlayer
 
@@ -27,6 +28,6 @@ func pause_animation():
 	if not animation_player: return
 	animation_player.pause()
 
-func set_animation_position(position: float):
+func set_animation_position(frame_position: float):
 	if not animation_player: return
-	animation_player.seek(position, true)
+	animation_player.seek(frame_position, true)

@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqly74a3jg4k1"]
+[gd_scene load_steps=9 format=3 uid="uid://dqly74a3jg4k1"]
 
 [ext_resource type="PackedScene" uid="uid://bj5ywl5kde6x6" path="res://ui/gltf_loader/pick_model_panel.tscn" id="1_561da"]
-[ext_resource type="Script" path="res://ui/main.gd" id="1_ig3e3"]
+[ext_resource type="Script" uid="uid://drgsb8q20mn5o" path="res://ui/main.gd" id="1_ig3e3"]
+[ext_resource type="PackedScene" uid="uid://bbq467bxms0yg" path="res://renderer/spritesheet_renderer.tscn" id="2_jlfdq"]
 [ext_resource type="PackedScene" uid="uid://b88sbvecfhnlq" path="res://ui/preview_window/preview_window.tscn" id="2_pxk5g"]
-[ext_resource type="Script" path="res://model_manager/model_manager.gd" id="4_h1bu1"]
+[ext_resource type="Script" uid="uid://c7sp7o8v6x1ho" path="res://model_manager/model_manager.gd" id="4_h1bu1"]
 [ext_resource type="PackedScene" uid="uid://ckry5jyr4ps3o" path="res://ui/animation_preview/animation_preview.tscn" id="5_hsfuj"]
 [ext_resource type="PackedScene" uid="uid://b7q43fwr5nuds" path="res://ui/camera_control/camera_control.tscn" id="5_nhn8a"]
+[ext_resource type="PackedScene" uid="uid://dfdsqt3xgfoc4" path="res://ui/render_control/render_control.tscn" id="6_8y7hp"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -17,6 +19,9 @@ grow_vertical = 2
 script = ExtResource("1_ig3e3")
 metadata/_edit_lock_ = true
 
+[node name="SpritesheetRenderer" parent="." instance=ExtResource("2_jlfdq")]
+unique_name_in_owner = true
+
 [node name="ModelManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_h1bu1")
@@ -24,10 +29,15 @@ script = ExtResource("4_h1bu1")
 [node name="PreviewWindow" parent="." instance=ExtResource("2_pxk5g")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 647.0
-offset_top = 84.0
-offset_right = -70.0
-offset_bottom = -127.0
+anchors_preset = -1
+anchor_left = 0.562
+anchor_top = 0.13
+anchor_right = 0.939
+anchor_bottom = 0.804
+offset_left = -0.424072
+offset_top = -0.240005
+offset_right = 0.271973
+offset_bottom = 0.00799561
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -43,18 +53,26 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="CameraControl" parent="VBoxContainer" instance=ExtResource("5_nhn8a")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
 metadata/_edit_use_anchors_ = true
+
+[node name="RenderControl" parent="VBoxContainer" instance=ExtResource("6_8y7hp")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
 
 [node name="AnimationPreview" parent="VBoxContainer" instance=ExtResource("5_hsfuj")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 
 [connection signal="file_selected" from="VBoxContainer/PickModelPanel" to="." method="load_model"]
-[connection signal="on_camera_offset_changed" from="VBoxContainer/CameraControl" to="PreviewWindow" method="set_camera_offset"]
-[connection signal="on_model_rotation_changed" from="VBoxContainer/CameraControl" to="PreviewWindow" method="set_model_rotation"]
-[connection signal="animation_selected" from="VBoxContainer/AnimationPreview" to="ModelManager" method="set_model_animation"]
-[connection signal="pause" from="VBoxContainer/AnimationPreview" to="ModelManager" method="pause_model_animation"]
-[connection signal="play" from="VBoxContainer/AnimationPreview" to="ModelManager" method="play_model_animation"]
+[connection signal="on_camera_settings_changed" from="VBoxContainer/CameraControl" to="PreviewWindow" method="set_camera_settings"]
+[connection signal="on_render_settings_changed" from="VBoxContainer/RenderControl" to="PreviewWindow" method="set_render_settings"]
+[connection signal="on_render_spritesheet_requested" from="VBoxContainer/RenderControl" to="." method="render_spritesheet"]
+[connection signal="on_animation_settings_changed" from="VBoxContainer/AnimationPreview" to="PreviewWindow" method="set_animation_settings"]

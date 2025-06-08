@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckry5jyr4ps3o"]
 
-[ext_resource type="Script" path="res://ui/animation_preview/animation_preview.gd" id="1_pa5ka"]
+[ext_resource type="Script" uid="uid://cqx4igpvvrxu2" path="res://ui/animation_preview/animation_preview.gd" id="1_pa5ka"]
 
 [node name="AnimationPreview" type="MarginContainer"]
 anchors_preset = 15
@@ -19,6 +19,7 @@ layout_mode = 2
 [node name="AnimationSelector" type="OptionButton" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+allow_reselect = true
 
 [node name="PlayButton" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2

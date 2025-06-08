@@ -12,8 +12,12 @@ config_version=5
 
 config/name="FlatPixel"
 run/main_scene="res://ui/main.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[debug]
+
+gdscript/warnings/shadowed_variable=0
 
 [gui]
 
@@ -21,5 +25,5 @@ theme/custom="res://ui/ui_theme.tres"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method.mobile="gl_compatibility"
