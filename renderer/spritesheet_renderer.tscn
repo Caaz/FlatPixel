@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbq467bxms0yg"]
+[gd_scene load_steps=5 format=3 uid="uid://bbq467bxms0yg"]
 
 [ext_resource type="PackedScene" uid="uid://wi7nghb5ua8u" path="res://model_manager/simulation_world.tscn" id="1_jsd5b"]
 [ext_resource type="Script" uid="uid://bnpuogpanxbj" path="res://renderer/spritesheet_renderer.gd" id="1_w6ouu"]
+
+[sub_resource type="Environment" id="Environment_qe3ny"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+
+[sub_resource type="World3D" id="World3D_r14kk"]
+environment = SubResource("Environment_qe3ny")
 
 [node name="SpritesheetRenderer" type="Node"]
 script = ExtResource("1_w6ouu")
@@ -20,6 +27,7 @@ mouse_filter = 2
 [node name="World" type="SubViewport" parent="SubViewportContainer"]
 unique_name_in_owner = true
 own_world_3d = true
+world_3d = SubResource("World3D_r14kk")
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(64, 64)

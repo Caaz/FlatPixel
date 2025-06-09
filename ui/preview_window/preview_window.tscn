@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b88sbvecfhnlq"]
+[gd_scene load_steps=6 format=3 uid="uid://b88sbvecfhnlq"]
 
 [ext_resource type="Script" uid="uid://ypv2bato426m" path="res://ui/preview_window/preview_window.gd" id="1_dyury"]
 [ext_resource type="PackedScene" uid="uid://wi7nghb5ua8u" path="res://model_manager/simulation_world.tscn" id="2_8jm15"]
+
+[sub_resource type="Environment" id="Environment_bxej4"]
+background_mode = 1
+background_color = Color(0.678944, 0.678944, 0.678944, 1)
+
+[sub_resource type="World3D" id="World3D_eq15e"]
+environment = SubResource("Environment_bxej4")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pnwus"]
 viewport_path = NodePath("World")
@@ -18,7 +25,7 @@ script = ExtResource("1_dyury")
 [node name="World" type="SubViewport" parent="."]
 unique_name_in_owner = true
 own_world_3d = true
-transparent_bg = true
+world_3d = SubResource("World3D_eq15e")
 size = Vector2i(64, 64)
 
 [node name="SimulationWorld" parent="World" instance=ExtResource("2_8jm15")]
