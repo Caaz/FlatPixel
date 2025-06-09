@@ -15,6 +15,11 @@ initial_position = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
 
+[node name="SaveFlpxDialog" type="FileDialog" parent="."]
+access = 2
+filters = PackedStringArray("*.flpx")
+use_native_dialog = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
@@ -55,13 +60,24 @@ text = "Export Normal Maps"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ExportButton" type="Button" parent="VBoxContainer"]
+[node name="SaveHBox" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="ExportButton" type="Button" parent="VBoxContainer/SaveHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Export"
 
+[node name="SaveFlpxButton" type="Button" parent="VBoxContainer/SaveHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save FLPX"
+
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="SaveFlpxDialog" to="." method="_save_flpx"]
 [connection signal="text_changed" from="VBoxContainer/ExportPathHBox/ExportPath" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportPathHBox/OpenExportPathDialogueButton" to="FileDialog" method="show"]
 [connection signal="value_changed" from="VBoxContainer/SpritesheetColumnsSpinbox" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportNormalsCheckbox" to="." method="_build_export_settings"]
-[connection signal="pressed" from="VBoxContainer/ExportButton" to="." method="_do_export"]
+[connection signal="pressed" from="VBoxContainer/SaveHBox/ExportButton" to="." method="_do_export"]
+[connection signal="pressed" from="VBoxContainer/SaveHBox/SaveFlpxButton" to="SaveFlpxDialog" method="show"]

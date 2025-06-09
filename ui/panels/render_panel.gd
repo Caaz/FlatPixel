@@ -13,6 +13,7 @@ extends MarginContainer
 var color_pickers: Array[PaletteColorPicker] = []
 
 func _ready():
+	Session.on_flpx_loaded.connect(_on_flpx_loaded)
 	_on_value_changed.call_deferred()
 
 func _on_value_changed():
@@ -49,6 +50,10 @@ func _add_color_to_palette(color: Color):
 	picker.set_color(color)
 	_on_value_changed()
 
+func _add_color_to_palette_no_signal(color: Color):
+	var picker := _construct_palette_picker()
+	picker.set_color(color)
+
 func _remove_palette_color(picker: PaletteColorPicker):
 	color_pickers.erase(picker)
 	picker.queue_free()
@@ -71,3 +76,14 @@ func _save_palette_to_path(path: String):
 
 func _run_render():
 	Session.run_render()
+
+func _on_flpx_loaded():
+	x_spin_box.set_value_no_signal(Session.render_settings.resolution.x)
+	y_spin_box.set_value_no_signal(Session.render_settings.resolution.y)
+	
+	fps_spin_box.set_value_no_signal(Session.render_settings.render_fps)
+	
+	color_quantization_checkbox.set_pressed_no_signal(Session.render_settings.use_color_quantization)
+	_clear_palette()
+	for color in Session.render_settings.quantization_palette:
+		_add_color_to_palette_no_signal(color)

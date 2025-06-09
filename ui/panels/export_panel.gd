@@ -4,6 +4,9 @@ extends MarginContainer
 @onready var spritesheet_columns_spinbox: SpinBox = %SpritesheetColumnsSpinbox
 @onready var export_normals_checkbox: CheckBox = %ExportNormalsCheckbox
 
+func _ready():
+	Session.on_flpx_loaded.connect(_on_flpx_loaded)
+	_build_export_settings.call_deferred()
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	if not path.ends_with(".png"):
@@ -20,3 +23,11 @@ func _build_export_settings():
 
 func _do_export():
 	Exporter.export()
+
+func _save_flpx(path: String):
+	FlpxHandler.save_session_flpx(path)
+
+func _on_flpx_loaded():
+	export_path_edit.text = Session.export_settings.export_path
+	spritesheet_columns_spinbox.set_value_no_signal(Session.export_settings.spritesheet_columns)
+	export_normals_checkbox.set_pressed_no_signal(Session.export_settings.export_normals)

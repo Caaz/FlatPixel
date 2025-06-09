@@ -1,13 +1,13 @@
 extends MarginContainer
 
-@onready var model_rotation_slider = %ModelRotationSlider
-@onready var model_rotation_spin_box = %ModelRotationSpinBox
+@onready var model_rotation_slider: Slider = %ModelRotationSlider
+@onready var model_rotation_spin_box: SpinBox = %ModelRotationSpinBox
 
-@onready var offset_x_spin_box = %XSpinBox
-@onready var offset_y_spin_box = %YSpinBox
-@onready var offset_z_spin_box = %ZSpinBox
+@onready var offset_x_spin_box: SpinBox = %XSpinBox
+@onready var offset_y_spin_box: SpinBox = %YSpinBox
+@onready var offset_z_spin_box: SpinBox = %ZSpinBox
 
-@onready var tilt_spin_box = %TiltSpinBox
+@onready var tilt_spin_box: SpinBox = %TiltSpinBox
 
 @onready var projection_option_button: OptionButton = %ProjectionOptionButton
 
@@ -16,9 +16,8 @@ extends MarginContainer
 @onready var perspective_only_v_box: VBoxContainer = %PerspectiveOnlyVBox
 @onready var perspective_fov_spin_box: SpinBox = %PerspectiveFovSpinBox
 
-var current_settings: CameraSettings
-
 func _ready():
+	Session.on_flpx_loaded.connect(_on_flpx_loaded)
 	_on_value_changed.call_deferred()
 
 func _on_value_changed():
@@ -47,3 +46,20 @@ func _autoframe():
 	offset_x_spin_box.value = center.x
 	offset_y_spin_box.value = center.y
 	_on_value_changed()
+
+func _on_flpx_loaded():
+	model_rotation_slider.set_value_no_signal(Session.camera_settings.model_rotation)
+	model_rotation_spin_box.set_value_no_signal(Session.camera_settings.model_rotation)
+	
+	offset_x_spin_box.set_value_no_signal(Session.camera_settings.camera_offset.x)
+	offset_y_spin_box.set_value_no_signal(Session.camera_settings.camera_offset.y)
+	offset_z_spin_box.set_value_no_signal(Session.camera_settings.camera_offset.z)
+	
+	tilt_spin_box.set_value_no_signal(Session.camera_settings.camera_tilt)
+	
+	projection_option_button.selected = 0 if Session.camera_settings.ortho_camera else 1
+	ortho_only_v_box.visible = Session.camera_settings.ortho_camera
+	perspective_only_v_box.visible = not Session.camera_settings.ortho_camera
+	
+	ortho_size_spin_box.set_value_no_signal(Session.camera_settings.ortho_camera_size)
+	perspective_fov_spin_box.set_value_no_signal(Session.camera_settings.perspective_camera_fov)

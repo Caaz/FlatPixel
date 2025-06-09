@@ -1,5 +1,7 @@
 class_name FlpxHandler
 
+const FLPX_EXTENSION: String = ".flpx"
+
 static func get_session_flpx() -> FlpxContents:
 	var flpx = FlpxContents.new()
 	flpx.camera_settings = Session.camera_settings.duplicate()
@@ -69,3 +71,18 @@ static func _dict_to_flpx(dict: Dictionary) -> FlpxContents:
 	flpx.export_settings.export_normals = dict["export"]["export_normals"]
 	
 	return flpx
+
+
+static func save_session_flpx(path: String):
+	if not path.ends_with(FLPX_EXTENSION):
+		path = path + FLPX_EXTENSION
+	
+	var session_flpx_data = get_session_flpx_string()
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_string(session_flpx_data)
+	file.close()
+
+static func read_flpx_from_file(path: String) -> FlpxContents:
+	var file = FileAccess.open(path, FileAccess.READ)
+	var flpx_string = file.get_as_text()
+	return get_flpx_from_string(flpx_string)

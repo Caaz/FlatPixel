@@ -5,6 +5,8 @@ signal on_camera_settings_updated
 signal on_render_settings_updated
 signal on_export_settings_updated
 
+signal on_flpx_loaded
+
 signal on_render
 
 @export var camera_settings: CameraSettings = CameraSettings.new()
@@ -44,3 +46,16 @@ func run_render():
 	if SpritesheetRenderer.rendering:
 		return
 	set_most_recent_render(await SpritesheetRenderer.build_render())
+
+func load_flpx_file(filepath: String):
+	load_flpx(FlpxHandler.read_flpx_from_file(filepath))
+
+func load_flpx(flpx: FlpxContents):
+	load_model(flpx.model_settings.model_path)
+	model_settings.selected_animations = flpx.model_settings.selected_animations
+	
+	set_camera_settings(flpx.camera_settings)
+	set_render_settings(flpx.render_settings)
+	set_export_settings(flpx.export_settings)
+	
+	on_flpx_loaded.emit()
