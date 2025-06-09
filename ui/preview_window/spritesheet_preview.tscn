@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdagb6dr0dy1l"]
 
-[ext_resource type="Script" uid="uid://caye85eecitse" path="res://ui/panels/spritesheet_preview.gd" id="1_oytde"]
+[ext_resource type="Script" uid="uid://caye85eecitse" path="res://ui/preview_window/spritesheet_preview.gd" id="1_oytde"]
 
 [node name="SpritesheetPreview" type="MarginContainer"]
 anchors_preset = 15

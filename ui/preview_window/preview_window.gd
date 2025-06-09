@@ -39,11 +39,6 @@ func set_render_settings(settings: RenderSettings):
 	world.size = settings.resolution
 	simulation.set_render_settings(settings)
 
-func set_animation_settings(settings: AnimationSettings):
-	preview_dummy.play_animation(settings.current_animation)
-	if not settings.is_playing:
-		preview_dummy.pause_animation()
-
 func get_viewport_image() -> Image:
 	return (viewport_view.texture as ViewportTexture).get_image()
 
@@ -51,12 +46,18 @@ func set_model_animation_idx(idx: int):
 	set_model_animation(preview_animation_option_button.get_item_text(idx))
 
 func set_model_animation(animation: String):
+	if not preview_dummy:
+		return
 	preview_dummy.play_animation(animation)
 
 func play_model_animation():
+	if not preview_dummy:
+		return
 	preview_dummy.resume_animation()
 
 func pause_model_animation():
+	if not preview_dummy:
+		return
 	preview_dummy.pause_animation()
 
 func set_preview_normals(state: bool):

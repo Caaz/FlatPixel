@@ -40,3 +40,10 @@ func _on_value_changed():
 	settings.perspective_camera_fov = perspective_fov_spin_box.value
 	
 	Session.set_camera_settings(settings)
+
+func _autoframe():
+	var aabb = Session.model_settings.model.get_aabb()
+	var center = aabb.get_center()
+	offset_x_spin_box.value = center.x
+	offset_y_spin_box.value = center.y
+	_on_value_changed()

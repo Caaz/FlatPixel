@@ -134,6 +134,13 @@ value = 75.0
 allow_greater = true
 allow_lesser = true
 
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AutocenterButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Autocenter"
+
 [connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" to="VBoxContainer/ModelRotationHBox/ModelRotationSlider" method="set_value_no_signal"]
 [connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" to="." method="_on_value_changed" unbinds=1]
 [connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSlider" to="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" method="set_value"]
@@ -144,3 +151,4 @@ allow_lesser = true
 [connection signal="item_selected" from="VBoxContainer/ProjectionOptionButton" to="." method="_on_value_changed" unbinds=1]
 [connection signal="value_changed" from="VBoxContainer/OrthoOnlyVBox/OrthoSizeSpinBox" to="." method="_on_value_changed" unbinds=1]
 [connection signal="value_changed" from="VBoxContainer/PerspectiveOnlyVBox/PerspectiveFovSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="pressed" from="VBoxContainer/AutocenterButton" to="." method="_autoframe"]
