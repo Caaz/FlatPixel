@@ -14,7 +14,7 @@ func _ready():
 	Session.on_render_settings_updated.connect(_on_render_settings_updated)
 
 func _on_model_updated():
-	set_model(Session.model_settings.model.duplicate())
+	set_model(Session.capture_model.duplicate())
 	
 	preview_animation_option_button.clear()
 	for anim in Session.model_settings.available_animations:

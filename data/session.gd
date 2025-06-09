@@ -12,11 +12,12 @@ signal on_render
 @export var model_settings: ModelSettings = ModelSettings.new()
 @export var export_settings: ExportSettings = ExportSettings.new()
 
+var capture_model: CaptureModel
 var most_recent_render: RenderResult
 
 func load_model(filepath: String):
 	var model = ModelManager.load_model(filepath)
-	model_settings.model = model
+	capture_model = model
 	model_settings.model_path = filepath
 	model_settings.selected_animations = []
 	model_settings.available_animations = model.available_animations

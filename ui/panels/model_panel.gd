@@ -25,7 +25,8 @@ func _on_animation_toggled(state: bool, anim_name: String):
 		if not anim_name in Session.model_settings.selected_animations:
 			Session.model_settings.selected_animations.append(anim_name)
 	else:
-		Session.model_settings.selected_animations.erase(anim_name)
+		if anim_name in Session.model_settings.selected_animations:
+			Session.model_settings.selected_animations.remove_at(Session.model_settings.selected_animations.find(anim_name))
 
 func _select_all_animations():
 	for child in animations_container.get_children():

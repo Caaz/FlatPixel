@@ -16,7 +16,9 @@ func build_render() -> RenderResult:
 	return RenderResult.new(diffuse_result, normal_result)
 
 func render_frames(use_normal: bool = false) -> Array[Image]:
-	var capture_model = Session.model_settings.model.duplicate() as CaptureModel
+	if Session.capture_model == null:
+		return ([] as Array[Image])
+	var capture_model = Session.capture_model.duplicate() as CaptureModel
 	
 	simulation.set_model(capture_model)
 	simulation.set_camera_settings(Session.camera_settings)
