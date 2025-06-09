@@ -40,6 +40,7 @@ static func _flpx_to_dict(flpx: FlpxContents) -> Dictionary:
 		},
 		"export": {
 			"export_path": flpx.export_settings.export_path,
+			"spritesheet_columns": flpx.export_settings.spritesheet_columns,
 			"export_normals": flpx.export_settings.export_normals
 		}
 	}
@@ -64,6 +65,7 @@ static func _dict_to_flpx(dict: Dictionary) -> FlpxContents:
 	flpx.render_settings.render_fps = dict["render"]["render_fps"]
 	
 	flpx.export_settings.export_path = dict["export"]["export_path"]
+	flpx.export_settings.spritesheet_columns = dict["export"]["spritesheet_columns"]
 	flpx.export_settings.export_normals = dict["export"]["export_normals"]
 	
 	return flpx

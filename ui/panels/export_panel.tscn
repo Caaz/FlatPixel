@@ -18,7 +18,7 @@ use_native_dialog = true
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="ExportPathLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Export Location"
 
@@ -33,6 +33,18 @@ size_flags_horizontal = 3
 [node name="OpenExportPathDialogueButton" type="Button" parent="VBoxContainer/ExportPathHBox"]
 layout_mode = 2
 text = " ... "
+
+[node name="SpritesheetColumnsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spritesheet Columns"
+
+[node name="SpritesheetColumnsSpinbox" type="SpinBox" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+value = 8.0
+rounded = true
+allow_greater = true
 
 [node name="ExportNormalsCheckbox" type="CheckBox" parent="VBoxContainer"]
 unique_name_in_owner = true
@@ -50,5 +62,6 @@ text = "Export"
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="text_changed" from="VBoxContainer/ExportPathHBox/ExportPath" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportPathHBox/OpenExportPathDialogueButton" to="FileDialog" method="show"]
+[connection signal="value_changed" from="VBoxContainer/SpritesheetColumnsSpinbox" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportNormalsCheckbox" to="." method="_build_export_settings"]
 [connection signal="pressed" from="VBoxContainer/ExportButton" to="." method="_do_export"]

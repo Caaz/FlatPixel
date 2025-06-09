@@ -63,7 +63,7 @@ func get_viewport_image() -> Image:
 
 func merge_frames(frames: Array[Image]) -> Image:
 	var num_frames = len(frames)
-	var columns = 8
+	var columns = Session.export_settings.spritesheet_columns
 	var rows = ceil(num_frames / float(columns))
 	
 	var frame_size: Vector2i = frames[0].get_size()
@@ -72,8 +72,8 @@ func merge_frames(frames: Array[Image]) -> Image:
 	var spritesheet = Image.create(spritesheet_size.x, spritesheet_size.y, false, frames[0].get_format())
 	
 	for i in range(len(frames)):
-		var col_idx = i % 8
-		var row_idx = floor(i / 8.0)
+		var col_idx = i % columns
+		var row_idx = floor(i / float(columns))
 		var frame = frames[i]
 		for x in range(frame.get_width()):
 			for y in range(frame.get_height()):
