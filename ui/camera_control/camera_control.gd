@@ -14,7 +14,7 @@ signal on_camera_settings_changed(new_settings: CameraSettings)
 var current_settings: CameraSettings
 
 func _ready():
-	_on_value_changed()
+	_on_value_changed.call_deferred()
 
 func _on_value_changed():
 	current_settings = CameraSettings.new()

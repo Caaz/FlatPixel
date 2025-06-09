@@ -1,0 +1,146 @@
+[gd_scene load_steps=2 format=3 uid="uid://biv2jotw81h8x"]
+
+[ext_resource type="Script" uid="uid://bkxkk7w8il3wt" path="res://ui/panels/camera_panel.gd" id="1_bqdgj"]
+
+[node name="CameraPanel" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bqdgj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ModelRotationLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Model Rotation"
+
+[node name="ModelRotationHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ModelRotationSpinBox" type="SpinBox" parent="VBoxContainer/ModelRotationHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -180.0
+max_value = 180.0
+
+[node name="ModelRotationSlider" type="HSlider" parent="VBoxContainer/ModelRotationHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -180.0
+max_value = 180.0
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CameraOffsetLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Camera Offset"
+
+[node name="CameraOffsetHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="XSpinBox" type="SpinBox" parent="VBoxContainer/CameraOffsetHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -20.0
+max_value = 20.0
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="YSpinBox" type="SpinBox" parent="VBoxContainer/CameraOffsetHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -20.0
+max_value = 20.0
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="ZSpinBox" type="SpinBox" parent="VBoxContainer/CameraOffsetHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -20.0
+max_value = 20.0
+step = 0.1
+value = 2.0
+allow_greater = true
+allow_lesser = true
+
+[node name="CameraTiltLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Camera Tilt"
+
+[node name="TiltSpinBox" type="SpinBox" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = -180.0
+max_value = 180.0
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ProjectionLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Projection Mode"
+
+[node name="ProjectionOptionButton" type="OptionButton" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Orthographic"
+popup/item_0/id = 0
+popup/item_1/text = "Perspective"
+popup/item_1/id = 1
+
+[node name="OrthoOnlyVBox" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/OrthoOnlyVBox"]
+layout_mode = 2
+text = "Camera Size"
+
+[node name="OrthoSizeSpinBox" type="SpinBox" parent="VBoxContainer/OrthoOnlyVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+value = 1.0
+allow_greater = true
+
+[node name="PerspectiveOnlyVBox" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PerspectiveOnlyVBox"]
+layout_mode = 2
+text = "Field of View"
+
+[node name="PerspectiveFovSpinBox" type="SpinBox" parent="VBoxContainer/PerspectiveOnlyVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 10.0
+max_value = 180.0
+value = 75.0
+allow_greater = true
+allow_lesser = true
+
+[connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" to="VBoxContainer/ModelRotationHBox/ModelRotationSlider" method="set_value_no_signal"]
+[connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSlider" to="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" method="set_value"]
+[connection signal="value_changed" from="VBoxContainer/CameraOffsetHBox/XSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/CameraOffsetHBox/YSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/CameraOffsetHBox/ZSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/TiltSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="item_selected" from="VBoxContainer/ProjectionOptionButton" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/OrthoOnlyVBox/OrthoSizeSpinBox" to="." method="_on_value_changed" unbinds=1]
+[connection signal="value_changed" from="VBoxContainer/PerspectiveOnlyVBox/PerspectiveFovSpinBox" to="." method="_on_value_changed" unbinds=1]

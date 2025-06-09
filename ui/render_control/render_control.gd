@@ -13,13 +13,12 @@ signal on_render_spritesheet_requested(output_path: String)
 var current_settings: RenderSettings
 
 func _ready():
-	_on_value_changed()
+	_on_value_changed.call_deferred()
 
 func _on_value_changed():
 	current_settings = RenderSettings.new()
 	
 	current_settings.resolution = Vector2i(int(x_spin_box.value), int(y_spin_box.value))
-	current_settings.render_normal_map = render_normal_checkbox.is_pressed()
 	current_settings.render_fps = int(fps_spin_box.value)
 	
 	on_render_settings_changed.emit(current_settings)

@@ -1,18 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://wi7nghb5ua8u"]
 
 [ext_resource type="Script" uid="uid://dsnq03c8q0gcj" path="res://model_manager/simulation_world.gd" id="1_0a5md"]
-[ext_resource type="Shader" uid="uid://bechis4e75y0d" path="res://shaders/screen_normal_shader.gdshader" id="1_el6tw"]
+[ext_resource type="Shader" uid="uid://bechis4e75y0d" path="res://shaders/simulation_postprocessor.gdshader" id="1_el6tw"]
 
 [sub_resource type="Environment" id="Environment_1sn5m"]
 background_mode = 1
 background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k1ptd"]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_el6tw")
 shader_parameter/use_normal = false
+shader_parameter/use_color_quantization = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_fygqc"]
+resource_local_to_scene = true
 material = SubResource("ShaderMaterial_k1ptd")
 flip_faces = true
 size = Vector2(2, 2)
@@ -24,13 +27,13 @@ script = ExtResource("1_0a5md")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 environment = SubResource("Environment_1sn5m")
+projection = 1
 
 [node name="PostFilter" type="MeshInstance3D" parent="Camera3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_fygqc")
-skeleton = NodePath("../..")
 
 [node name="ModelRoot" type="Node3D" parent="."]
 unique_name_in_owner = true

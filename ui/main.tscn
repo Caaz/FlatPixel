@@ -1,13 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqly74a3jg4k1"]
+[gd_scene load_steps=8 format=3 uid="uid://dqly74a3jg4k1"]
 
-[ext_resource type="PackedScene" uid="uid://bj5ywl5kde6x6" path="res://ui/gltf_loader/pick_model_panel.tscn" id="1_561da"]
 [ext_resource type="Script" uid="uid://drgsb8q20mn5o" path="res://ui/main.gd" id="1_ig3e3"]
-[ext_resource type="PackedScene" uid="uid://bbq467bxms0yg" path="res://renderer/spritesheet_renderer.tscn" id="2_jlfdq"]
 [ext_resource type="PackedScene" uid="uid://b88sbvecfhnlq" path="res://ui/preview_window/preview_window.tscn" id="2_pxk5g"]
-[ext_resource type="Script" uid="uid://c7sp7o8v6x1ho" path="res://model_manager/model_manager.gd" id="4_h1bu1"]
-[ext_resource type="PackedScene" uid="uid://ckry5jyr4ps3o" path="res://ui/animation_preview/animation_preview.tscn" id="5_hsfuj"]
-[ext_resource type="PackedScene" uid="uid://b7q43fwr5nuds" path="res://ui/camera_control/camera_control.tscn" id="5_nhn8a"]
-[ext_resource type="PackedScene" uid="uid://dfdsqt3xgfoc4" path="res://ui/render_control/render_control.tscn" id="6_8y7hp"]
+[ext_resource type="PackedScene" uid="uid://s3okkitvmc7k" path="res://ui/panels/export_panel.tscn" id="5_06s8x"]
+[ext_resource type="PackedScene" uid="uid://diklcen85yc3m" path="res://ui/panels/render_panel.tscn" id="5_fc3ap"]
+[ext_resource type="PackedScene" uid="uid://bdagb6dr0dy1l" path="res://ui/panels/spritesheet_preview.tscn" id="7_06s8x"]
+[ext_resource type="PackedScene" uid="uid://biv2jotw81h8x" path="res://ui/panels/camera_panel.tscn" id="8_7nk2m"]
+[ext_resource type="PackedScene" uid="uid://dtlhn4og7ouyg" path="res://ui/panels/model_panel.tscn" id="8_ar4ev"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -19,60 +18,58 @@ grow_vertical = 2
 script = ExtResource("1_ig3e3")
 metadata/_edit_lock_ = true
 
-[node name="SpritesheetRenderer" parent="." instance=ExtResource("2_jlfdq")]
-unique_name_in_owner = true
-
-[node name="ModelManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("4_h1bu1")
-
-[node name="PreviewWindow" parent="." instance=ExtResource("2_pxk5g")]
-unique_name_in_owner = true
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -4
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.562
-anchor_top = 0.13
-anchor_right = 0.939
-anchor_bottom = 0.804
-offset_left = -0.424072
-offset_top = -0.240005
-offset_right = 0.271973
-offset_bottom = 0.00799561
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.256076
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+color = Color(0.980392, 0.980392, 0.980392, 1)
 
-[node name="PickModelPanel" parent="VBoxContainer" instance=ExtResource("1_561da")]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 700
+
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Model" parent="HSplitContainer/TabContainer" instance=ExtResource("8_ar4ev")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Camera" parent="HSplitContainer/TabContainer" instance=ExtResource("8_7nk2m")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Render" parent="HSplitContainer/TabContainer" instance=ExtResource("5_fc3ap")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Export" parent="HSplitContainer/TabContainer" instance=ExtResource("5_06s8x")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="TabContainer2" type="TabContainer" parent="HSplitContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Preview" parent="HSplitContainer/TabContainer2" instance=ExtResource("2_pxk5g")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
+metadata/_tab_index = 0
 
-[node name="CameraControl" parent="VBoxContainer" instance=ExtResource("5_nhn8a")]
-unique_name_in_owner = true
+[node name="Spritesheet" parent="HSplitContainer/TabContainer2" instance=ExtResource("7_06s8x")]
+visible = false
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-metadata/_edit_use_anchors_ = true
-
-[node name="RenderControl" parent="VBoxContainer" instance=ExtResource("6_8y7hp")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
-
-[node name="AnimationPreview" parent="VBoxContainer" instance=ExtResource("5_hsfuj")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-
-[connection signal="file_selected" from="VBoxContainer/PickModelPanel" to="." method="load_model"]
-[connection signal="on_camera_settings_changed" from="VBoxContainer/CameraControl" to="PreviewWindow" method="set_camera_settings"]
-[connection signal="on_render_settings_changed" from="VBoxContainer/RenderControl" to="PreviewWindow" method="set_render_settings"]
-[connection signal="on_render_spritesheet_requested" from="VBoxContainer/RenderControl" to="." method="render_spritesheet"]
-[connection signal="on_animation_settings_changed" from="VBoxContainer/AnimationPreview" to="PreviewWindow" method="set_animation_settings"]
+metadata/_tab_index = 1

@@ -15,15 +15,21 @@ run/main_scene="res://ui/main.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Session="*res://data/session.gd"
+SpritesheetRenderer="*res://renderer/spritesheet_renderer.tscn"
+
 [debug]
 
 gdscript/warnings/shadowed_variable=0
 
 [gui]
 
-theme/custom="res://ui/ui_theme.tres"
+theme/custom="uid://d3g3ugsxeo4xw"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.980392, 0.980392, 0.980392, 1)

@@ -3,52 +3,60 @@ extends Node
 @onready var world: SubViewport = %World
 @onready var simulation: SimulationWorld = %SimulationWorld
 
-var capture_model: CaptureModel
-var camera_settings: CameraSettings
-var render_settings: RenderSettings
-var animation_settings: AnimationSettings
+var rendering: bool = false
 
-func render_spritesheet(model: CaptureModel, camera_settings: CameraSettings, render_settings: RenderSettings, animation_settings: AnimationSettings, output_path: String):
-	self.camera_settings = camera_settings
-	self.render_settings = render_settings
-	self.animation_settings = animation_settings
+func build_render() -> RenderResult:
+	rendering = true
 	
-	world.size = render_settings.resolution
+	var diffuse_result = await render_frames(false)
+	var normal_result = await render_frames(true)
 	
-	capture_model = model.duplicate() as CaptureModel
+	rendering = false
+	
+	return RenderResult.new(diffuse_result, normal_result)
+
+func render_frames(use_normal: bool = false) -> Array[Image]:
+	var capture_model = Session.model_settings.model.duplicate() as CaptureModel
+	
 	simulation.set_model(capture_model)
-	simulation.set_camera_settings(camera_settings)
-	simulation.set_render_settings(render_settings)
+	simulation.set_camera_settings(Session.camera_settings)
+	simulation.set_render_settings(Session.render_settings)
+	simulation.set_normals(use_normal)
+	world.size = Session.render_settings.resolution
 	
-	# Wait one frame to let things settle
-	await get_tree().process_frame
+	var fps = Session.render_settings.render_fps
 	
-	capture_model.play_animation(animation_settings.current_animation)
+	var images: Array[Image] = []
+	for anim in Session.model_settings.selected_animations:
+		var anim_frames = await _render_animation(capture_model, anim, fps)
+		images.append_array(anim_frames)
+	
+	capture_model.queue_free()
+	return images
+
+func _render_animation(capture_model: CaptureModel, animation: String, render_fps: float) -> Array[Image]:
+	capture_model.play_animation(animation)
 	#capture_model.pause_animation()
 	
 	# Wait one frame to let things settle
 	await get_tree().process_frame
 	
-	var frames = await get_all_frames()
-	var spritesheet = merge_frames(frames)
-	spritesheet.save_png("user://test.png")
-	
-	simulation.set_model(null)
+	return await get_all_frames(capture_model, render_fps)
 
-func get_all_frames() -> Array[Image]:
-	var num_frames = capture_model.animation_player.current_animation_length * render_settings.render_fps
+func get_all_frames(capture_model: CaptureModel, render_fps: float) -> Array[Image]:
+	var num_frames = capture_model.animation_player.current_animation_length * render_fps
 	var images: Array[Image] = []
 	for i in range(num_frames):
-		images.append(await get_viewport_image())
+		images.append(await capture_frame(capture_model, i, render_fps))
 	return images
 
-func capture_frame(frame_idx: int) -> Image:
-	capture_model.set_animation_position(frame_idx * (1.0 / render_settings.render_fps))
+func capture_frame(capture_model: CaptureModel, frame_idx: int, render_fps: float) -> Image:
+	capture_model.set_animation_position(frame_idx * (1.0 / render_fps))
 	return await get_viewport_image()
 
 func get_viewport_image() -> Image:
 	# Signal must be awaited before grabbing next frame!
-	await get_tree().process_frame
+	await RenderingServer.frame_post_draw
 	return world.get_texture().get_image()
 
 func merge_frames(frames: Array[Image]) -> Image:
