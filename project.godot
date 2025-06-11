@@ -24,10 +24,6 @@ SpritesheetRenderer="*res://renderer/spritesheet_renderer.tscn"
 
 gdscript/warnings/shadowed_variable=0
 
-[gui]
-
-theme/custom="uid://d3g3ugsxeo4xw"
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

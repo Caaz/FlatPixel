@@ -45,6 +45,7 @@ min_value = 8.0
 max_value = 256.0
 value = 64.0
 allow_greater = true
+select_all_on_focus = true
 
 [node name="YSpinBox" type="SpinBox" parent="VBoxContainer/ResolutionContainer"]
 unique_name_in_owner = true
@@ -54,6 +55,7 @@ min_value = 8.0
 max_value = 256.0
 value = 64.0
 allow_greater = true
+select_all_on_focus = true
 
 [node name="FPSLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -68,6 +70,7 @@ max_value = 240.0
 value = 30.0
 allow_greater = true
 allow_lesser = true
+select_all_on_focus = true
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2

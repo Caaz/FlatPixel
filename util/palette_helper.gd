@@ -15,9 +15,16 @@ static func palette_from_image(image: Image) -> Array[Color]:
 	var colors: Array[Color] = []
 	for x in image.get_width():
 		for y in image.get_height():
-			var c := image.get_pixel(x, y)
-			if c not in colors:
-				colors.append(c)
+			var pixel_color := image.get_pixel(x, y)
+			if pixel_color.a != 0.0:
+				var opaque_color = Color(pixel_color.r, pixel_color.g, pixel_color.b, 1.0)
+				if opaque_color not in colors:
+					colors.append(opaque_color)
+	
+	if len(colors) > 1024:
+		push_warning("Too many colors in loaded palette! Truncating at 1024...")
+		colors = colors.slice(0, 1024)
+	
 	return colors
 
 static func palette_from_image_path(path: String) -> Array[Color]:

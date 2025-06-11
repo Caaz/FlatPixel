@@ -50,6 +50,7 @@ min_value = 1.0
 value = 8.0
 rounded = true
 allow_greater = true
+select_all_on_focus = true
 
 [node name="ExportNormalsCheckbox" type="CheckBox" parent="VBoxContainer"]
 unique_name_in_owner = true

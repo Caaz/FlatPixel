@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d3g3ugsxeo4xw"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d3g3ugsxeo4xw"]
+
+[ext_resource type="StyleBox" uid="uid://d2dmtpnoa8i7h" path="res://theme/default_stylebox.tres" id="1_udl1o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ofqa"]
 bg_color = Color(0, 0, 0, 0.733333)
@@ -11,9 +13,16 @@ expand_margin_top = 4.0
 expand_margin_right = 4.0
 expand_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udl1o"]
+draw_center = false
+border_width_bottom = 2
+
 [resource]
 MarginContainer/constants/margin_bottom = 8
 MarginContainer/constants/margin_left = 8
 MarginContainer/constants/margin_right = 8
 MarginContainer/constants/margin_top = 8
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_3ofqa")
+TabContainer/styles/panel = ExtResource("1_udl1o")
+TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_udl1o")
+TabContainer/styles/tab_selected = ExtResource("1_udl1o")

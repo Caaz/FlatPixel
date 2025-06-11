@@ -42,7 +42,9 @@ func _on_value_changed():
 
 func _autoframe():
 	var aabb = Session.capture_model.get_aabb()
+	print("Model aabb: ", aabb)
 	var center = aabb.get_center()
+	print("Center: ", center)
 	offset_x_spin_box.value = center.x
 	offset_y_spin_box.value = center.y
 	_on_value_changed()

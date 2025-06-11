@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqly74a3jg4k1"]
+[gd_scene load_steps=9 format=3 uid="uid://dqly74a3jg4k1"]
 
+[ext_resource type="Theme" uid="uid://d3g3ugsxeo4xw" path="res://ui/ui_theme.tres" id="1_04ebt"]
 [ext_resource type="Script" uid="uid://drgsb8q20mn5o" path="res://ui/main.gd" id="1_ig3e3"]
 [ext_resource type="PackedScene" uid="uid://b88sbvecfhnlq" path="res://ui/preview_window/preview_window.tscn" id="2_pxk5g"]
 [ext_resource type="PackedScene" uid="uid://s3okkitvmc7k" path="res://ui/panels/export_panel.tscn" id="5_06s8x"]
@@ -15,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_04ebt")
 script = ExtResource("1_ig3e3")
 metadata/_edit_lock_ = true
 
