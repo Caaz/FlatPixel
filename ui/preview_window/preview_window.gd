@@ -20,6 +20,8 @@ func _on_model_updated():
 	for anim in Session.model_settings.available_animations:
 		preview_animation_option_button.add_item(anim)
 	preview_animation_option_button.select(0)
+	set_model_animation_idx(0)
+	pause_model_animation()
 
 func _on_camera_settings_updated():
 	set_camera_settings(Session.camera_settings)

@@ -1,17 +1,35 @@
 extends Node
 
+signal on_render_start(title: String)
+signal on_render_finish
+signal on_render_progress_update(current_frame: int, total_frames: int, current_anim: int, total_anims: int)
+
 @onready var world: SubViewport = %World
 @onready var simulation: SimulationWorld = %SimulationWorld
 
 var rendering: bool = false
 
-func build_render() -> RenderResult:
+var current_animation_idx: int
+var total_animations: int
+
+func build_render(render_normals: bool = true) -> RenderResult:
+	if rendering:
+		return RenderResult.new([] as Array[Image], [] as Array[Image])
+	
+	
+	on_render_start.emit("Diffuse")
 	rendering = true
 	
 	var diffuse_result = await render_frames(false)
-	var normal_result = await render_frames(true)
+	
+	var normal_result = ([] as Array[Image])
+	if render_normals:
+		on_render_start.emit("Normal")
+		normal_result = await render_frames(true)
 	
 	rendering = false
+	
+	on_render_finish.emit()
 	
 	return RenderResult.new(diffuse_result, normal_result)
 
@@ -29,9 +47,14 @@ func render_frames(use_normal: bool = false) -> Array[Image]:
 	var fps = Session.render_settings.render_fps
 	
 	var images: Array[Image] = []
+	
+	total_animations = len(Session.model_settings.selected_animations)
+	current_animation_idx = 0
+	
 	for anim in Session.model_settings.selected_animations:
 		var anim_frames = await _render_animation(capture_model, anim, fps)
 		images.append_array(anim_frames)
+		current_animation_idx += 1
 	
 	capture_model.queue_free()
 	return images
@@ -50,6 +73,7 @@ func get_all_frames(capture_model: CaptureModel, render_fps: float) -> Array[Ima
 	var images: Array[Image] = []
 	for i in range(num_frames):
 		images.append(await capture_frame(capture_model, i, render_fps))
+		on_render_progress_update.emit(i, num_frames, current_animation_idx, total_animations)
 	return images
 
 func capture_frame(capture_model: CaptureModel, frame_idx: int, render_fps: float) -> Image:

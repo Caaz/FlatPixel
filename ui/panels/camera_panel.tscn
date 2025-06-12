@@ -149,6 +149,7 @@ layout_mode = 2
 
 [node name="AutocenterButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Autocenter"
 
 [connection signal="value_changed" from="VBoxContainer/ModelRotationHBox/ModelRotationSpinBox" to="VBoxContainer/ModelRotationHBox/ModelRotationSlider" method="set_value_no_signal"]
