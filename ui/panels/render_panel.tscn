@@ -116,6 +116,7 @@ text = "Save Palette"
 layout_mode = 2
 
 [node name="RenderSpritesheetButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Render Spritesheet"
 

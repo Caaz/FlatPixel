@@ -10,10 +10,14 @@ extends MarginContainer
 @onready var color_quantization_checkbox: CheckBox = %ColorQuantizationCheckbox
 @onready var palette_v_box: VBoxContainer = %PaletteVBox
 
+@onready var render_spritesheet_button: Button = %RenderSpritesheetButton
+
 var color_pickers: Array[PaletteColorPicker] = []
 
 func _ready():
 	Session.on_flpx_loaded.connect(_on_flpx_loaded)
+	SpritesheetRenderer.on_render_start.connect(render_spritesheet_button.set_disabled.bind(true).unbind(1))
+	SpritesheetRenderer.on_render_finish.connect(render_spritesheet_button.set_disabled.bind(false))
 	_on_value_changed.call_deferred()
 
 func _on_value_changed():
