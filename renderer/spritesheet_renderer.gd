@@ -60,8 +60,9 @@ func render_frames(use_normal: bool = false) -> Array[Image]:
 	return images
 
 func _render_animation(capture_model: CaptureModel, animation: String, render_fps: float) -> Array[Image]:
+	# Load in animation, but don't actively play as we will scrub through manually
 	capture_model.play_animation(animation)
-	#capture_model.pause_animation()
+	capture_model.pause_animation()
 	
 	# Wait one frame to let things settle
 	await get_tree().process_frame
@@ -69,7 +70,7 @@ func _render_animation(capture_model: CaptureModel, animation: String, render_fp
 	return await get_all_frames(capture_model, render_fps)
 
 func get_all_frames(capture_model: CaptureModel, render_fps: float) -> Array[Image]:
-	var num_frames = capture_model.animation_player.current_animation_length * render_fps
+	var num_frames := roundi(capture_model.animation_player.current_animation_length * render_fps)
 	var images: Array[Image] = []
 	for i in range(num_frames):
 		images.append(await capture_frame(capture_model, i, render_fps))
