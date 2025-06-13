@@ -5,7 +5,7 @@ static func load_model(path: String) -> CaptureModel:
 	var gltf_state := GLTFState.new()
 	var error := gltf_document.append_from_file(path, gltf_state)
 	if error != OK:
-		push_error("Failed to load gltf at %s" % path)
+		return null
 		
 	var gltf_scene_root_node := gltf_document.generate_scene(gltf_state)
 	var model_scene := _preprocess_model(gltf_scene_root_node)

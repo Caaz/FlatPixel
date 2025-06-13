@@ -44,9 +44,10 @@ func load_model(filepath: String):
 	else:
 		var model = ModelManager.load_model(filepath)
 		capture_model = model
-		model_settings.model_path = filepath
-		model_settings.selected_animations = []
-		model_settings.available_animations = model.available_animations
+		if model != null:
+			model_settings.model_path = filepath
+			model_settings.selected_animations = []
+			model_settings.available_animations = model.available_animations
 	
 	session_dirty = true
 	render_dirty = true
@@ -102,17 +103,16 @@ func load_flpx(flpx: FlpxContents):
 
 func save_flpx(path: String = ""):
 	if path != "":
+		if not path.ends_with(".flpx"):
+			path = path + ".flpx"
 		currently_open_file = path
-	
-	if not path.ends_with(".flpx"):
-		path = path + ".flpx"
 	
 	if currently_open_file == "":
 		push_error("Cannot save file when no file handle has been provided!")
 	
 	FlpxHandler.save_session_flpx(currently_open_file)
 	session_dirty = false
-	EventReporter.report_save(path)
+	EventReporter.report_save(currently_open_file)
 
 func reset():
 	load_flpx(FlpxContents.new())
