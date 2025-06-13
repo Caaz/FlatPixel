@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://d3g3ugsxeo4xw"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://d3g3ugsxeo4xw"]
 
 [ext_resource type="StyleBox" uid="uid://br0moyphl1kmi" path="res://theme/menubar_default_stylebox.tres" id="1_6r5ox"]
 [ext_resource type="StyleBox" uid="uid://2ngv78m36tet" path="res://theme/menubar_hovered_stylebox.tres" id="1_es402"]
@@ -7,17 +7,6 @@
 [ext_resource type="StyleBox" uid="uid://c3rgb07avjqxl" path="res://theme/tab_stylebox_hovered.tres" id="2_8aw70"]
 [ext_resource type="StyleBox" uid="uid://bmkgniq0rgoay" path="res://theme/menubar_pressed_stylebox.tres" id="3_p7mgs"]
 [ext_resource type="StyleBox" uid="uid://rn3k57eo8s06" path="res://theme/tab_stylebox_unselected.tres" id="4_eqcwn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ofqa"]
-bg_color = Color(0, 0, 0, 0.733333)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7uusv"]
 draw_center = false
@@ -31,7 +20,7 @@ MarginContainer/constants/margin_top = 8
 MenuBar/styles/hover = ExtResource("1_es402")
 MenuBar/styles/normal = ExtResource("1_6r5ox")
 MenuBar/styles/pressed = ExtResource("3_p7mgs")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_3ofqa")
+PanelContainer/styles/panel = ExtResource("1_udl1o")
 TabContainer/styles/panel = ExtResource("1_udl1o")
 TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_7uusv")
 TabContainer/styles/tab_hovered = ExtResource("2_8aw70")

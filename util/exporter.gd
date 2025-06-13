@@ -10,6 +10,8 @@ static func export():
 	_write_frames_to_path(render_result.diffuse_frames, export_path)
 	if Session.export_settings.export_normals:
 		_write_frames_to_path(render_result.normal_frames, _build_normals_export_path(export_path))
+	
+	EventReporter.report_export(Session.export_settings.export_path)
 
 static func _write_frames_to_path(frames: Array[Image], path: String):
 	var merged := SpritesheetRenderer.merge_frames(frames)

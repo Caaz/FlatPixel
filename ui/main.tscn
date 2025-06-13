@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqly74a3jg4k1"]
+[gd_scene load_steps=12 format=3 uid="uid://dqly74a3jg4k1"]
 
 [ext_resource type="Theme" uid="uid://d3g3ugsxeo4xw" path="res://theme/ui_theme.tres" id="1_04ebt"]
 [ext_resource type="Script" uid="uid://drgsb8q20mn5o" path="res://ui/main.gd" id="1_ig3e3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://biv2jotw81h8x" path="res://ui/panels/camera_panel.tscn" id="8_7nk2m"]
 [ext_resource type="PackedScene" uid="uid://dtlhn4og7ouyg" path="res://ui/panels/model_panel.tscn" id="8_ar4ev"]
 [ext_resource type="PackedScene" uid="uid://bnpwapabnqlj1" path="res://ui/popups/render_progress_popup.tscn" id="9_ar4ev"]
+[ext_resource type="PackedScene" uid="uid://cl5jpj53ua6e5" path="res://ui/event_bar.tscn" id="10_4w4kc"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -39,8 +40,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="MenuBar" parent="VBoxContainer" instance=ExtResource("3_7nk2m")]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
 layout_mode = 2
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
@@ -85,6 +91,9 @@ metadata/_tab_index = 0
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
+
+[node name="EventBar" parent="VBoxContainer" instance=ExtResource("10_4w4kc")]
+layout_mode = 2
 
 [node name="RenderProgressPopup" parent="." instance=ExtResource("9_ar4ev")]
 visible = false

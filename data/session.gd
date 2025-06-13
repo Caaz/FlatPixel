@@ -61,6 +61,7 @@ func set_export_settings(settings: ExportSettings):
 
 func set_most_recent_render(render: RenderResult):
 	most_recent_render = render
+	EventReporter.report_render(render)
 	on_render.emit()
 
 func run_render():
@@ -71,6 +72,7 @@ func run_render():
 func load_flpx_file(filepath: String):
 	load_flpx(FlpxHandler.read_flpx_from_file(filepath))
 	currently_open_file = filepath
+	EventReporter.report_open(filepath)
 
 func load_flpx(flpx: FlpxContents):
 	load_model(flpx.model_settings.model_path)
@@ -95,6 +97,7 @@ func save_flpx(path: String = ""):
 	
 	FlpxHandler.save_session_flpx(currently_open_file)
 	session_dirty = false
+	EventReporter.report_save(path)
 
 func reset():
 	load_flpx(FlpxContents.new())
