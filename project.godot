@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Session="*res://data/session.gd"
 SpritesheetRenderer="*res://renderer/spritesheet_renderer.tscn"
+RecentFileManager="*res://util/recent_file_manager.gd"
 
 [debug]
 

@@ -17,6 +17,12 @@ signal on_render
 var capture_model: CaptureModel
 var most_recent_render: RenderResult
 
+var currently_open_file: String :
+	set(value):
+		currently_open_file = value
+		RecentFileManager.add_recent_file(currently_open_file)
+		get_window().title = "FlatPixel - %s" % currently_open_file.split("/")[-1]
+
 func load_model(filepath: String):
 	var model = ModelManager.load_model(filepath)
 	capture_model = model
@@ -49,6 +55,7 @@ func run_render():
 
 func load_flpx_file(filepath: String):
 	load_flpx(FlpxHandler.read_flpx_from_file(filepath))
+	currently_open_file = filepath
 
 func load_flpx(flpx: FlpxContents):
 	load_model(flpx.model_settings.model_path)
@@ -59,3 +66,15 @@ func load_flpx(flpx: FlpxContents):
 	set_export_settings(flpx.export_settings)
 	
 	on_flpx_loaded.emit()
+
+func save_flpx(path: String = ""):
+	if path != "":
+		currently_open_file = path
+	
+	if not path.ends_with(".flpx"):
+		path = path + ".flpx"
+	
+	if currently_open_file == "":
+		push_error("Cannot save file when no file handle has been provided!")
+	
+	FlpxHandler.save_session_flpx(currently_open_file)

@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdvwgj3fcgst0"]
+
+[ext_resource type="Script" uid="uid://gxifx34u5oub" path="res://ui/top_menu_bar.gd" id="1_j2rdl"]
+
+[node name="MenuBar" type="MenuBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j2rdl")
+
+[node name="OpenFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 2
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.flpx")
+use_native_dialog = true
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+initial_position = 2
+access = 2
+filters = PackedStringArray("*.flpx")
+use_native_dialog = true
+
+[node name="FileMenu" type="PopupMenu" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "File"
+
+[node name="OpenRecentMenu" type="PopupMenu" parent="FileMenu"]
+unique_name_in_owner = true
+item_count = 1
+item_0/text = "<empty>"
+item_0/id = 0
+item_0/disabled = true
+
+[node name="AboutMenu" type="PopupMenu" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "About"
+item_count = 1
+item_0/id = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.305882, 0.305882, 0.305882, 1)
+
+[connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_path_selected"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_path_selected"]
+[connection signal="id_pressed" from="FileMenu" to="." method="_on_file_menu_id_pressed"]
+[connection signal="index_pressed" from="FileMenu/OpenRecentMenu" to="." method="_on_open_recent_menu_index_pressed"]
