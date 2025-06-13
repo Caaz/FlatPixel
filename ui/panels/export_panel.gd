@@ -25,9 +25,14 @@ func _build_export_settings():
 
 func _do_export():
 	if Session.export_settings.export_path == "":
-		export_path_select_file_dialog.show()
+		_open_export_path_dialog()
 	else:
 		Exporter.export()
+
+func _open_export_path_dialog():
+	if Session.export_settings.export_path != "":
+		export_path_select_file_dialog.current_file = Session.export_settings.export_path
+	export_path_select_file_dialog.show()
 
 func _on_flpx_loaded():
 	export_path_edit.text = Session.export_settings.export_path

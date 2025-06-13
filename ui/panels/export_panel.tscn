@@ -13,6 +13,7 @@ script = ExtResource("1_ibcqs")
 [node name="FileDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 initial_position = 2
+access = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
 
@@ -67,7 +68,7 @@ text = "Export"
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="text_changed" from="VBoxContainer/ExportPathHBox/ExportPath" to="." method="_build_export_settings" unbinds=1]
-[connection signal="pressed" from="VBoxContainer/ExportPathHBox/OpenExportPathDialogueButton" to="FileDialog" method="show"]
+[connection signal="pressed" from="VBoxContainer/ExportPathHBox/OpenExportPathDialogueButton" to="." method="_open_export_path_dialog"]
 [connection signal="value_changed" from="VBoxContainer/SpritesheetColumnsSpinbox" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportNormalsCheckbox" to="." method="_build_export_settings"]
 [connection signal="pressed" from="VBoxContainer/SaveHBox/ExportButton" to="." method="_do_export"]
