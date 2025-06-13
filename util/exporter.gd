@@ -1,7 +1,7 @@
 class_name Exporter
 
 static func export():
-	if not is_instance_valid(Session.most_recent_render):
+	if not is_instance_valid(Session.most_recent_render) or Session.render_dirty:
 		await Session.run_render()
 	
 	var render_result = Session.most_recent_render

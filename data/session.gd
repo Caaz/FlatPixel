@@ -22,8 +22,12 @@ var most_recent_render: RenderResult
 
 var session_dirty: bool = false :
 	set(value):
+		var refresh_title = session_dirty != value
 		session_dirty = value
-		_reset_window_title()
+		if refresh_title:
+			_reset_window_title()
+
+var render_dirty: bool = false
 
 var currently_open_file: String :
 	set(value):
@@ -45,21 +49,25 @@ func load_model(filepath: String):
 		model_settings.available_animations = model.available_animations
 	
 	session_dirty = true
+	render_dirty = true
 	on_model_updated.emit()
 
 func set_camera_settings(settings: CameraSettings):
 	camera_settings = settings
 	session_dirty = true
+	render_dirty = true
 	on_camera_settings_updated.emit()
 
 func set_render_settings(settings: RenderSettings):
 	render_settings = settings
 	session_dirty = true
+	render_dirty = true
 	on_render_settings_updated.emit()
 
 func set_export_settings(settings: ExportSettings):
 	export_settings = settings
 	session_dirty = true
+	render_dirty = true
 	on_export_settings_updated.emit()
 
 func set_preview_settings(settings: PreviewSettings):
@@ -68,6 +76,7 @@ func set_preview_settings(settings: PreviewSettings):
 func set_most_recent_render(render: RenderResult):
 	most_recent_render = render
 	EventReporter.report_render(render)
+	render_dirty = false
 	on_render.emit()
 
 func run_render():
