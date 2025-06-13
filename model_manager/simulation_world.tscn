@@ -19,12 +19,15 @@ size = Vector2(2, 2)
 [node name="SimulationWorld" type="Node3D"]
 script = ExtResource("1_0a5md")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="CameraRotationAxis" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera3D" type="Camera3D" parent="CameraRotationAxis"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 projection = 1
 
-[node name="PostFilter" type="MeshInstance3D" parent="Camera3D"]
+[node name="PostFilter" type="MeshInstance3D" parent="CameraRotationAxis/Camera3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 extra_cull_margin = 16384.0

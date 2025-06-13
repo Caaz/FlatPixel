@@ -31,49 +31,94 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.980392, 0.980392, 0.980392, 1)
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FileMenu" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+unique_name_in_owner = true
+title = "File"
+item_count = 7
+item_0/text = "New"
+item_0/id = 0
+item_1/id = 1
+item_1/disabled = true
+item_1/separator = true
+item_2/text = "Open"
+item_2/id = 2
+item_3/text = "Save"
+item_3/id = 3
+item_4/text = "Save As"
+item_4/id = 4
+item_5/id = 5
+item_5/disabled = true
+item_5/separator = true
+item_6/text = "Exit"
+item_6/id = 6
+
+[node name="AboutMenu" type="PopupMenu" parent="VBoxContainer/MenuBar"]
+unique_name_in_owner = true
+title = "About"
+item_count = 1
+item_0/id = 0
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/MenuBar"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.305882, 0.305882, 0.305882, 1)
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 split_offset = 700
 
-[node name="TabContainer" type="TabContainer" parent="HSplitContainer"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer"]
 layout_mode = 2
 current_tab = 0
 
-[node name="Model" parent="HSplitContainer/TabContainer" instance=ExtResource("8_ar4ev")]
+[node name="Model" parent="VBoxContainer/HSplitContainer/TabContainer" instance=ExtResource("8_ar4ev")]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Camera" parent="HSplitContainer/TabContainer" instance=ExtResource("8_7nk2m")]
+[node name="Camera" parent="VBoxContainer/HSplitContainer/TabContainer" instance=ExtResource("8_7nk2m")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Render" parent="HSplitContainer/TabContainer" instance=ExtResource("5_fc3ap")]
+[node name="Render" parent="VBoxContainer/HSplitContainer/TabContainer" instance=ExtResource("5_fc3ap")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="Export" parent="HSplitContainer/TabContainer" instance=ExtResource("5_06s8x")]
+[node name="Export" parent="VBoxContainer/HSplitContainer/TabContainer" instance=ExtResource("5_06s8x")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="TabContainer2" type="TabContainer" parent="HSplitContainer"]
+[node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HSplitContainer"]
 custom_minimum_size = Vector2(440, 0)
 layout_mode = 2
 current_tab = 0
 
-[node name="Preview" parent="HSplitContainer/TabContainer2" instance=ExtResource("2_pxk5g")]
+[node name="Preview" parent="VBoxContainer/HSplitContainer/TabContainer2" instance=ExtResource("2_pxk5g")]
 unique_name_in_owner = true
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Spritesheet" parent="HSplitContainer/TabContainer2" instance=ExtResource("7_06s8x")]
+[node name="Spritesheet" parent="VBoxContainer/HSplitContainer/TabContainer2" instance=ExtResource("7_06s8x")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
@@ -85,3 +130,5 @@ offset_left = -282.5
 offset_top = -32.5
 offset_right = 282.5
 offset_bottom = 32.5
+
+[connection signal="id_pressed" from="VBoxContainer/MenuBar/FileMenu" to="." method="_on_file_menu_id_pressed"]

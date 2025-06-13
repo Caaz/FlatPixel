@@ -2,6 +2,7 @@ class_name SimulationWorld
 extends Node3D
 
 @onready var camera: Camera3D = %Camera3D
+@onready var camera_rotation_axis: Node3D = %CameraRotationAxis
 @onready var post_filter = %PostFilter
 @onready var model_root = %ModelRoot
 
@@ -13,8 +14,9 @@ func set_model(node: Node3D):
 
 func set_camera_settings(settings: CameraSettings):
 	model_root.rotation_degrees = Vector3(0, settings.model_rotation, 0)
-	camera.global_position = settings.camera_offset
-	camera.rotation_degrees = Vector3(settings.camera_tilt, 0, 0)
+	camera.position = settings.camera_offset
+	
+	camera_rotation_axis.rotation_degrees = Vector3(settings.camera_tilt, 0, 0)
 	
 	camera.projection = Camera3D.PROJECTION_ORTHOGONAL if settings.ortho_camera else Camera3D.PROJECTION_PERSPECTIVE
 	camera.size = settings.ortho_camera_size
