@@ -11,9 +11,6 @@ func _ready():
 func on_model_path_selected(filepath: String):
 	Session.load_model(filepath)
 
-func _load_flpx(filepath: String):
-	Session.load_flpx_file(filepath)
-
 func _on_model_updated():
 	for child in animations_container.get_children():
 		child.queue_free()

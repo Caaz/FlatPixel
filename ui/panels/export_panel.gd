@@ -24,9 +24,6 @@ func _build_export_settings():
 func _do_export():
 	Exporter.export()
 
-func _save_flpx(path: String):
-	FlpxHandler.save_session_flpx(path)
-
 func _on_flpx_loaded():
 	export_path_edit.text = Session.export_settings.export_path
 	spritesheet_columns_spinbox.set_value_no_signal(Session.export_settings.spritesheet_columns)
