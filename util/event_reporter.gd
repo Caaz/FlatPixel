@@ -3,7 +3,7 @@ extends Node
 const SAVE_FORMAT_STRING = "Saved current project to %s."
 const OPEN_FORMAT_STRING = "Opened project %s."
 const EXPORT_FORMAT_STRING = "Exported spritesheet to %s."
-const RENDER_FORMAT_STRING = "Render completed in %f.2 seconds."
+const RENDER_FORMAT_STRING = "Render completed in %.3f seconds."
 
 signal on_event_reported(event_text: String)
 
@@ -23,4 +23,4 @@ func report_export(filepath: String):
 	report_event(EXPORT_FORMAT_STRING % filepath)
 
 func report_render(render_result: RenderResult):
-	report_event(RENDER_FORMAT_STRING % 0.0)
+	report_event(RENDER_FORMAT_STRING % (render_result.render_duration_ms / 1000.0))

@@ -16,6 +16,7 @@ func build_render(render_normals: bool = true) -> RenderResult:
 	if rendering:
 		return RenderResult.new([] as Array[Image], [] as Array[Image])
 	
+	var now = Time.get_ticks_msec()
 	
 	on_render_start.emit("Diffuse")
 	rendering = true
@@ -31,7 +32,11 @@ func build_render(render_normals: bool = true) -> RenderResult:
 	
 	on_render_finish.emit()
 	
-	return RenderResult.new(diffuse_result, normal_result)
+	var time_consumed = Time.get_ticks_msec() - now
+	
+	var render_result = RenderResult.new(diffuse_result, normal_result)
+	render_result.render_duration_ms = time_consumed
+	return render_result
 
 func render_frames(use_normal: bool = false) -> Array[Image]:
 	if Session.capture_model == null:
@@ -50,7 +55,7 @@ func render_frames(use_normal: bool = false) -> Array[Image]:
 	
 	var target_animations = Session.model_settings.selected_animations \
 		if len(Session.model_settings.selected_animations) > 0 \
-		else [Session.preview_settings.previewed_animation]
+		else PackedStringArray([Session.preview_settings.previewed_animation])
 	
 	total_animations = len(target_animations)
 	current_animation_idx = 0
