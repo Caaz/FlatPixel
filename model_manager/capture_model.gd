@@ -35,9 +35,9 @@ func set_animation_position(frame_position: float):
 	animation_player.seek(frame_position, true)
 
 func get_aabb():
-	return _calculate_spatial_bounds(self, false)
+	return _calculate_spatial_bounds(self)
 
-func _calculate_spatial_bounds(parent : Node3D, exclude_top_level_transform: bool) -> AABB:
+func _calculate_spatial_bounds(parent : Node3D, exclude_top_level_transform: bool = true) -> AABB:
 	var bounds : AABB = AABB()
 	if parent is VisualInstance3D:
 		bounds = parent.get_aabb();
