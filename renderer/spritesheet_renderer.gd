@@ -34,13 +34,16 @@ func build_render(render_normals: bool = true) -> RenderResult:
 	
 	var time_consumed = Time.get_ticks_msec() - now
 	
-	var render_result = RenderResult.new(diffuse_result, normal_result)
+	var render_result = RenderResult.new(diffuse_result.frames, normal_result.frames)
 	render_result.render_duration_ms = time_consumed
+	render_result.animation_details = diffuse_result.animation_details
+	render_result.render_resolution = Session.render_settings.resolution
+	render_result.render_fps = Session.render_settings.render_fps
 	return render_result
 
-func render_frames(use_normal: bool = false) -> Array[Image]:
+func render_frames(use_normal: bool = false) -> RenderSubresult:
 	if Session.capture_model == null:
-		return ([] as Array[Image])
+		return null
 	var capture_model = Session.capture_model.duplicate() as CaptureModel
 	
 	simulation.set_model(capture_model)
@@ -60,13 +63,30 @@ func render_frames(use_normal: bool = false) -> Array[Image]:
 	total_animations = len(target_animations)
 	current_animation_idx = 0
 	
+	var animation_details: Array[AnimationDetails] = []
+	var total_frames_processed = 0
+	
 	for anim in target_animations:
 		var anim_frames = await _render_animation(capture_model, anim, fps)
 		images.append_array(anim_frames)
+		
+		# Save off animation details for later
+		var anim_details = AnimationDetails.new()
+		anim_details.animation_name = anim
+		anim_details.frame_start = total_frames_processed
+		anim_details.frame_end = total_frames_processed + len(anim_frames) - 1
+		animation_details.append(anim_details)
+		
+		total_frames_processed += len(anim_frames)
+		
 		current_animation_idx += 1
 	
 	capture_model.queue_free()
-	return images
+	
+	var result = RenderSubresult.new()
+	result.frames = images
+	result.animation_details = animation_details
+	return result
 
 func _render_animation(capture_model: CaptureModel, animation: String, render_fps: float) -> Array[Image]:
 	# Load in animation, but don't actively play as we will scrub through manually
