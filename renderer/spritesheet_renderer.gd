@@ -48,10 +48,14 @@ func render_frames(use_normal: bool = false) -> Array[Image]:
 	
 	var images: Array[Image] = []
 	
-	total_animations = len(Session.model_settings.selected_animations)
+	var target_animations = Session.model_settings.selected_animations \
+		if len(Session.model_settings.selected_animations) > 0 \
+		else [Session.preview_settings.previewed_animation]
+	
+	total_animations = len(target_animations)
 	current_animation_idx = 0
 	
-	for anim in Session.model_settings.selected_animations:
+	for anim in target_animations:
 		var anim_frames = await _render_animation(capture_model, anim, fps)
 		images.append_array(anim_frames)
 		current_animation_idx += 1

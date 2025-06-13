@@ -14,6 +14,9 @@ signal on_render
 @export var model_settings: ModelSettings = ModelSettings.new()
 @export var export_settings: ExportSettings = ExportSettings.new()
 
+# These settings are NOT serialized. This is just a runtime thing.
+@export var preview_settings: PreviewSettings = PreviewSettings.new()
+
 var capture_model: CaptureModel
 var most_recent_render: RenderResult
 
@@ -58,6 +61,9 @@ func set_export_settings(settings: ExportSettings):
 	export_settings = settings
 	session_dirty = true
 	on_export_settings_updated.emit()
+
+func set_preview_settings(settings: PreviewSettings):
+	preview_settings = settings
 
 func set_most_recent_render(render: RenderResult):
 	most_recent_render = render

@@ -9,6 +9,8 @@ extends Control
 
 var preview_dummy: CaptureModel
 
+var settings: PreviewSettings = PreviewSettings.new()
+
 func _ready():
 	Session.on_model_updated.connect(_on_model_updated)
 	Session.on_camera_settings_updated.connect(_on_camera_settings_updated)
@@ -59,6 +61,8 @@ func set_model_animation_idx(idx: int):
 func set_model_animation(animation: String):
 	if not preview_dummy:
 		return
+	settings.previewed_animation = animation
+	Session.set_preview_settings(settings)
 	preview_dummy.play_animation(animation)
 
 func play_model_animation():
@@ -72,6 +76,8 @@ func pause_model_animation():
 	preview_dummy.pause_animation()
 
 func set_preview_normals(state: bool):
+	settings.preview_normals = state
+	Session.set_preview_settings(settings)
 	simulation.set_normals(state)
 
 
