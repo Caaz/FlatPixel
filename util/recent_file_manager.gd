@@ -11,6 +11,9 @@ func _ready() -> void:
 	load_config_file()
 
 func add_recent_file(filepath: String):
+	if filepath == "":
+		return
+	
 	# Prevent same file from appearing multiple times
 	while filepath in recent_files:
 		recent_files.erase(filepath)

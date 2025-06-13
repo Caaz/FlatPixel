@@ -24,12 +24,18 @@ var currently_open_file: String :
 		get_window().title = "FlatPixel - %s" % currently_open_file.split("/")[-1]
 
 func load_model(filepath: String):
-	var model = ModelManager.load_model(filepath)
-	capture_model = model
-	model_settings.model_path = filepath
-	model_settings.selected_animations = []
-	model_settings.available_animations = model.available_animations
-	
+	if filepath == "":
+		capture_model = null
+		model_settings.model_path = ""
+		model_settings.selected_animations = []
+		model_settings.available_animations = []
+	else:
+		var model = ModelManager.load_model(filepath)
+		capture_model = model
+		model_settings.model_path = filepath
+		model_settings.selected_animations = []
+		model_settings.available_animations = model.available_animations
+		
 	on_model_updated.emit()
 
 func set_camera_settings(settings: CameraSettings):
@@ -78,3 +84,7 @@ func save_flpx(path: String = ""):
 		push_error("Cannot save file when no file handle has been provided!")
 	
 	FlpxHandler.save_session_flpx(currently_open_file)
+
+func reset():
+	load_flpx(FlpxContents.new())
+	currently_open_file = ""

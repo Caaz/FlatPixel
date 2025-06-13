@@ -35,7 +35,7 @@ func _on_file_menu_id_pressed(id: int) -> void:
 	match id:
 		0:
 			# New
-			print("New")
+			Session.reset()
 		1:
 			# Open
 			open_file_dialog.show()

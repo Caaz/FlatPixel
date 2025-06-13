@@ -21,14 +21,16 @@ func _process(_delta: float):
 		)
 
 func _on_model_updated():
-	set_model(Session.capture_model.duplicate())
+	set_model(Session.capture_model)
 	
 	preview_animation_option_button.clear()
 	for anim in Session.model_settings.available_animations:
 		preview_animation_option_button.add_item(anim)
-	preview_animation_option_button.select(0)
-	set_model_animation_idx(0)
-	pause_model_animation()
+	
+	if preview_animation_option_button.item_count > 0:
+		preview_animation_option_button.select(0)
+		set_model_animation_idx(0)
+		pause_model_animation()
 
 func _on_camera_settings_updated():
 	set_camera_settings(Session.camera_settings)
@@ -37,7 +39,7 @@ func _on_render_settings_updated():
 	set_render_settings(Session.render_settings)
 
 func set_model(node: CaptureModel):
-	preview_dummy = node.duplicate() as CaptureModel
+	preview_dummy = node.duplicate() as CaptureModel if node else null
 	simulation.set_model(preview_dummy)
 	return preview_dummy
 
