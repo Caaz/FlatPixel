@@ -28,6 +28,7 @@ func _on_animation_toggled(state: bool, anim_name: String):
 	else:
 		if anim_name in Session.model_settings.selected_animations:
 			Session.model_settings.selected_animations.remove_at(Session.model_settings.selected_animations.find(anim_name))
+	Session.session_dirty = true
 
 func _select_all_animations():
 	for child in animations_container.get_children():
