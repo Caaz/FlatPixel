@@ -11,20 +11,27 @@ var recent_files_submenu: PopupMenu
 
 func _ready():
 	file_menu.add_item("New", 0)
+	file_menu.set_item_shortcut(file_menu.get_item_index(0), _build_shortcut(KEY_N))
 	
 	file_menu.add_separator("", 1000)
 	
 	file_menu.add_item("Open...", 1)
+	file_menu.set_item_shortcut(file_menu.get_item_index(1), _build_shortcut(KEY_O))
+	
 	file_menu.add_submenu_node_item("Open Recent", open_recent_menu, 2)
 	
 	file_menu.add_separator("", 1001)
 	
 	file_menu.add_item("Save", 3)
+	file_menu.set_item_shortcut(file_menu.get_item_index(3), _build_shortcut(KEY_S))
+	
 	file_menu.add_item("Save As...", 4)
+	file_menu.set_item_shortcut(file_menu.get_item_index(4), _build_shortcut(KEY_S, true, true))
 	
 	file_menu.add_separator("", 1002)
 	
 	file_menu.add_item("Exit", 5)
+	file_menu.set_item_shortcut(file_menu.get_item_index(5), _build_shortcut(KEY_Q))
 	
 	about_menu.set_item_text(0, "%s v%s" % [ProjectSettings.get_setting("application/config/name"), ProjectSettings.get_setting("application/config/version")])
 	
@@ -53,7 +60,12 @@ func _on_file_menu_id_pressed(id: int) -> void:
 			get_tree().quit()
 
 func _on_open_recent_menu_index_pressed(idx: int) -> void:
-	Session.load_flpx_file(open_recent_menu.get_item_text(idx))
+	# Clear recents
+	if open_recent_menu.get_item_id(idx) == 1000:
+		RecentFileManager.clear_recents()
+	else:
+		# Actually open something
+		Session.load_flpx_file(open_recent_menu.get_item_text(idx))
 
 
 func _on_open_path_selected(filepath: String):
@@ -67,5 +79,18 @@ func _update_recent_files(files: Array[String]):
 	if len(files) == 0:
 		open_recent_menu.add_item("<empty>")
 		open_recent_menu.set_item_disabled(0, true)
+		return
+	
 	for recent in files:
 		open_recent_menu.add_item(recent)
+	open_recent_menu.add_separator()
+	open_recent_menu.add_item("Clear Recents", 1000)
+
+func _build_shortcut(key: Key, use_ctrl: bool = true, use_shift: bool = false) -> Shortcut:
+	var shortcut := Shortcut.new()
+	var event := InputEventKey.new()
+	event.keycode = key
+	event.ctrl_pressed = use_ctrl
+	event.shift_pressed = use_shift
+	shortcut.events = [event]
+	return shortcut

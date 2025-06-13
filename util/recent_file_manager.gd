@@ -24,6 +24,11 @@ func add_recent_file(filepath: String):
 	save_config_file()
 	on_recent_files_updated.emit(recent_files)
 
+func clear_recents():
+	recent_files = []
+	save_config_file()
+	on_recent_files_updated.emit(recent_files)
+
 func load_config_file():
 	var config = ConfigFile.new()
 	var err = config.load(RECENT_FILE_PATH)
