@@ -17,7 +17,7 @@ func _ready():
 	Session.on_render_settings_updated.connect(_on_render_settings_updated)
 
 func _process(_delta: float):
-	if preview_dummy and preview_dummy.animation_player.is_playing():
+	if preview_dummy and is_instance_valid(preview_dummy.animation_player) and preview_dummy.animation_player.is_playing():
 		animation_time_slider.set_value_no_signal(
 			preview_dummy.animation_player.current_animation_position / preview_dummy.animation_player.current_animation_length
 		)
@@ -82,5 +82,5 @@ func set_preview_normals(state: bool):
 
 
 func _on_animation_time_slider_value_changed(value: float) -> void:
-	if preview_dummy:
-		preview_dummy.animation_player.seek(preview_dummy.animation_player.current_animation_length * value, true)
+	if preview_dummy and is_instance_valid(preview_dummy.animation_player):
+		preview_dummy.set_animation_position(preview_dummy.animation_player.current_animation_length * value)

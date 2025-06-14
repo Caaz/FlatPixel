@@ -53,5 +53,7 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 layout_mode = 2
 
+[connection signal="file_selected" from="FileDialog" to="." method="on_model_path_selected"]
+[connection signal="pressed" from="VBoxContainer/LoadHBox/LoadGltfButton" to="FileDialog" method="show"]
 [connection signal="pressed" from="VBoxContainer/AnimationsTopHBox/SelectAllButton" to="." method="_select_all_animations"]
 [connection signal="pressed" from="VBoxContainer/AnimationsTopHBox/DeselectAllButton" to="." method="_deselect_all_animations"]
