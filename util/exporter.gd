@@ -29,6 +29,11 @@ static func _build_json_export_path(diffuse_path: String):
 	return start + ".json"
 
 static func _write_render_report_json(diffuse_path: String, normals_path: String, render_result: RenderResult):
+	# Little bit of extra info we can calculate now:
+	var total_frames = len(render_result.diffuse_frames)
+	var columns = int(Session.export_settings.spritesheet_columns)
+	var rows = ceili(total_frames / float(columns))
+	
 	var json = {}
 	
 	json["diffuse_path"] = diffuse_path
@@ -50,6 +55,10 @@ static func _write_render_report_json(diffuse_path: String, normals_path: String
 			"frame_end": elem.frame_end
 		})
 	json["animation_details"] = anim_details
+	
+	json["total_frames"] = total_frames
+	json["hframes"] = columns
+	json["vframes"] = rows
 	
 	var json_string = JSON.stringify(json, "\t")
 	
