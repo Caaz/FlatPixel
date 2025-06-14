@@ -9,6 +9,8 @@ signal on_flpx_loaded
 
 signal on_render
 
+signal on_model_load_failure(path: String)
+
 @export var camera_settings: CameraSettings = CameraSettings.new()
 @export var render_settings: RenderSettings = RenderSettings.new()
 @export var model_settings: ModelSettings = ModelSettings.new()
@@ -44,7 +46,10 @@ func load_model(filepath: String):
 	else:
 		var model = ModelManager.load_model(filepath)
 		capture_model = model
-		if model != null:
+
+		if model == null:
+			on_model_load_failure.emit(filepath)
+		else:
 			model_settings.model_path = filepath
 			model_settings.selected_animations = []
 			model_settings.available_animations = model.available_animations
@@ -91,12 +96,12 @@ func load_flpx_file(filepath: String):
 	EventReporter.report_open(filepath)
 
 func load_flpx(flpx: FlpxContents):
-	load_model(flpx.model_settings.model_path)
-	model_settings.selected_animations = flpx.model_settings.selected_animations
-	
 	set_camera_settings(flpx.camera_settings)
 	set_render_settings(flpx.render_settings)
 	set_export_settings(flpx.export_settings)
+	
+	load_model(flpx.model_settings.model_path)
+	model_settings.selected_animations = flpx.model_settings.selected_animations
 	
 	session_dirty = false
 	on_flpx_loaded.emit()

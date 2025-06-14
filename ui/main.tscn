@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqly74a3jg4k1"]
+[gd_scene load_steps=13 format=3 uid="uid://dqly74a3jg4k1"]
 
 [ext_resource type="Theme" uid="uid://d3g3ugsxeo4xw" path="res://theme/ui_theme.tres" id="1_04ebt"]
 [ext_resource type="Script" uid="uid://drgsb8q20mn5o" path="res://ui/main.gd" id="1_ig3e3"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dtlhn4og7ouyg" path="res://ui/panels/model_panel.tscn" id="8_ar4ev"]
 [ext_resource type="PackedScene" uid="uid://bnpwapabnqlj1" path="res://ui/popups/render_progress_popup.tscn" id="9_ar4ev"]
 [ext_resource type="PackedScene" uid="uid://cl5jpj53ua6e5" path="res://ui/event_bar.tscn" id="10_4w4kc"]
+[ext_resource type="PackedScene" uid="uid://iigjxtj1cs3y" path="res://util/model_load_recovery.tscn" id="12_r4kgx"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -102,3 +103,5 @@ offset_left = -282.5
 offset_top = -32.5
 offset_right = 282.5
 offset_bottom = 32.5
+
+[node name="ModelLoadRecovery" parent="." instance=ExtResource("12_r4kgx")]

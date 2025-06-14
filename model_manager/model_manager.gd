@@ -3,6 +3,8 @@ class_name ModelManager
 static func load_model(path: String) -> CaptureModel:
 	var gltf_document := GLTFDocument.new()
 	var gltf_state := GLTFState.new()
+	if not FileAccess.file_exists(path):
+		return null
 	var error := gltf_document.append_from_file(path, gltf_state)
 	if error != OK:
 		return null

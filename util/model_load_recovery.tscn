@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://iigjxtj1cs3y"]
+
+[ext_resource type="PackedScene" uid="uid://ba32rpntbyxf2" path="res://popups/open_model_popup.tscn" id="1_6mteh"]
+[ext_resource type="Script" uid="uid://dvtosogsxbf14" path="res://util/model_load_recovery.gd" id="1_68ytj"]
+
+[node name="ModelLoadRecovery" type="Node"]
+script = ExtResource("1_68ytj")
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "Model Load Failed"
+initial_position = 2
+size = Vector2i(500, 100)
+dialog_close_on_escape = false
+dialog_autowrap = true
+
+[node name="OpenModelDialog" parent="." instance=ExtResource("1_6mteh")]
+
+[connection signal="confirmed" from="ConfirmationDialog" to="OpenModelDialog" method="show"]
+[connection signal="file_selected" from="OpenModelDialog" to="." method="_recover_model"]
