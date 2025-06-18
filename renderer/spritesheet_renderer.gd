@@ -43,7 +43,7 @@ func build_render(render_normals: bool = true) -> RenderResult:
 
 func render_frames(use_normal: bool = false) -> RenderSubresult:
 	if Session.capture_model == null:
-		return null
+		return RenderSubresult.new()
 	var capture_model = Session.capture_model.duplicate() as CaptureModel
 	
 	simulation.set_model(capture_model)

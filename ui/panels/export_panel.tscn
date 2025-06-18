@@ -10,6 +10,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ibcqs")
 
+[node name="ConfirmExportOverwriteDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+initial_position = 2
+size = Vector2i(800, 132)
+dialog_autowrap = true
+
 [node name="FileDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 initial_position = 2
@@ -66,6 +72,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Export"
 
+[connection signal="confirmed" from="ConfirmExportOverwriteDialog" to="." method="_confirm_export"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="text_changed" from="VBoxContainer/ExportPathHBox/ExportPath" to="." method="_build_export_settings" unbinds=1]
 [connection signal="pressed" from="VBoxContainer/ExportPathHBox/OpenExportPathDialogueButton" to="." method="_open_export_path_dialog"]
