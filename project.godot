@@ -14,7 +14,7 @@ config/name="FlatPixel"
 config/version="0.2"
 run/main_scene="res://ui/main.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://b640qw13n7y6j"
 
 [autoload]
 
