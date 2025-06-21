@@ -57,31 +57,40 @@ func render_frames(use_normal: bool = false) -> RenderSubresult:
 	var images: Array[Image] = []
 	var animation_details: Array[AnimationDetails] = []
 	
+	var use_turntable = Session.camera_settings.turntable_steps > 1
+	var turntable_steps = Session.camera_settings.turntable_steps if use_turntable else 1
+	var turntable_rotation_degrees = 360.0 / turntable_steps if use_turntable else 0.0
+	
 	if is_instance_valid(capture_model.animation_player):
 		# If the capture model has an animation player, it has animation for us to process.
 		var target_animations = Session.model_settings.selected_animations \
 			if len(Session.model_settings.selected_animations) > 0 \
 			else PackedStringArray([Session.preview_settings.previewed_animation])
 		
-		total_animations = len(target_animations)
+		total_animations = len(target_animations) * (turntable_steps if use_turntable else 1)
 		current_animation_idx = 0
 		
 		var total_frames_processed = 0
 		
 		for anim in target_animations:
-			var anim_frames = await _render_animation(capture_model, anim, fps)
-			images.append_array(anim_frames)
-			
-			# Save off animation details for later
-			var anim_details = AnimationDetails.new()
-			anim_details.animation_name = anim
-			anim_details.frame_start = total_frames_processed
-			anim_details.frame_end = total_frames_processed + len(anim_frames) - 1
-			animation_details.append(anim_details)
-			
-			total_frames_processed += len(anim_frames)
-			
-			current_animation_idx += 1
+			for turntable_step in range(turntable_steps):
+				var turntable_step_rotation = turntable_step * turntable_rotation_degrees
+				
+				simulation.set_turntable_angle(turntable_step_rotation)
+				
+				var anim_frames = await _render_animation(capture_model, anim, fps)
+				images.append_array(anim_frames)
+				
+				# Save off animation details for later
+				var anim_details = AnimationDetails.new()
+				anim_details.animation_name = anim if not use_turntable else "%s-%sdeg" % [anim, str(int(turntable_step_rotation))]
+				anim_details.frame_start = total_frames_processed
+				anim_details.frame_end = total_frames_processed + len(anim_frames) - 1
+				animation_details.append(anim_details)
+				
+				total_frames_processed += len(anim_frames)
+				
+				current_animation_idx += 1
 	
 	else:
 		# Else, return a still

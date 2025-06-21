@@ -5,6 +5,7 @@ extends Node3D
 @onready var camera_rotation_axis: Node3D = %CameraRotationAxis
 @onready var post_filter = %PostFilter
 @onready var model_root = %ModelRoot
+@onready var model_turntable: Node3D = %ModelTurntable
 
 func set_model(node: Node3D):
 	for n in model_root.get_children():
@@ -34,3 +35,6 @@ func set_render_settings(settings: RenderSettings):
 func set_normals(normals_enabled: bool):
 	var post_shader = post_filter.get_active_material(0)
 	post_shader.set_shader_parameter("use_normal", normals_enabled)
+
+func set_turntable_angle(degrees: float):
+	model_turntable.rotation_degrees = Vector3(0, degrees, 0)

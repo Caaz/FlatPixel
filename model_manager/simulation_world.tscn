@@ -33,5 +33,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_fygqc")
 
-[node name="ModelRoot" type="Node3D" parent="."]
+[node name="ModelTurntable" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="ModelRoot" type="Node3D" parent="ModelTurntable"]
 unique_name_in_owner = true
