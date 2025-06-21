@@ -16,6 +16,10 @@ extends MarginContainer
 @onready var perspective_only_v_box: VBoxContainer = %PerspectiveOnlyVBox
 @onready var perspective_fov_spin_box: SpinBox = %PerspectiveFovSpinBox
 
+@onready var turntable_off_button: Button = %OffButton
+@onready var turntable_four_direction_button: Button = %FourDirectionButton
+@onready var turntable_eight_direction_button: Button = %EightDirectionButton
+
 func _ready():
 	Session.on_flpx_loaded.connect(_on_flpx_loaded)
 	_on_value_changed.call_deferred()
@@ -38,7 +42,17 @@ func _on_value_changed():
 	settings.ortho_camera_size = ortho_size_spin_box.value
 	settings.perspective_camera_fov = perspective_fov_spin_box.value
 	
+	settings.turntable_steps = _get_turntable_value()
+	
 	Session.set_camera_settings(settings)
+
+func _get_turntable_value():
+	if turntable_off_button.button_pressed:
+		return 1
+	elif turntable_four_direction_button.button_pressed:
+		return 4
+	elif turntable_eight_direction_button.button_pressed:
+		return 8
 
 func _autoframe():
 	var aabb = Session.capture_model.get_aabb()
@@ -65,3 +79,7 @@ func _on_flpx_loaded():
 	
 	ortho_size_spin_box.set_value_no_signal(Session.camera_settings.ortho_camera_size)
 	perspective_fov_spin_box.set_value_no_signal(Session.camera_settings.perspective_camera_fov)
+	
+	turntable_off_button.button_pressed = Session.camera_settings.turntable_steps == 1
+	turntable_four_direction_button.button_pressed = Session.camera_settings.turntable_steps == 4
+	turntable_eight_direction_button.button_pressed = Session.camera_settings.turntable_steps == 8

@@ -32,7 +32,8 @@ static func _flpx_to_dict(flpx: FlpxContents) -> Dictionary:
 			"camera_tilt": flpx.camera_settings.camera_tilt,
 			"ortho_camera": flpx.camera_settings.ortho_camera,
 			"ortho_camera_size": flpx.camera_settings.ortho_camera_size,
-			"perspective_camera_fov": flpx.camera_settings.perspective_camera_fov
+			"perspective_camera_fov": flpx.camera_settings.perspective_camera_fov,
+			"turntable_steps": flpx.camera_settings.turntable_steps
 		},
 		"render": {
 			"resolution": var_to_str(flpx.render_settings.resolution),
@@ -60,6 +61,7 @@ static func _dict_to_flpx(dict: Dictionary) -> FlpxContents:
 	flpx.camera_settings.ortho_camera = dict["camera"]["ortho_camera"]
 	flpx.camera_settings.ortho_camera_size = dict["camera"]["ortho_camera_size"]
 	flpx.camera_settings.perspective_camera_fov = dict["camera"]["perspective_camera_fov"]
+	flpx.camera_settings.turntable_steps = dict["camera"]["turntable_steps"]
 	
 	flpx.render_settings.resolution = str_to_var(dict["render"]["resolution"])
 	flpx.render_settings.use_color_quantization = dict["render"]["use_color_quantization"]

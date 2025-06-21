@@ -9,3 +9,5 @@ extends Resource
 
 @export var ortho_camera_size: float = 1
 @export var perspective_camera_fov: float = 75
+
+@export var turntable_steps: int = 1
