@@ -73,7 +73,6 @@ func set_render_settings(settings: RenderSettings):
 func set_export_settings(settings: ExportSettings):
 	export_settings = settings
 	session_dirty = true
-	render_dirty = true
 	on_export_settings_updated.emit()
 
 func set_preview_settings(settings: PreviewSettings):
