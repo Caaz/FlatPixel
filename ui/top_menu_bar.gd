@@ -9,29 +9,31 @@ extends MenuBar
 
 var recent_files_submenu: PopupMenu
 
+enum MenuItem {NEW, OPEN, OPEN_RECENT, SAVE, SAVE_AS, EXIT}
+
 func _ready():
-	file_menu.add_item("New", 0)
-	file_menu.set_item_shortcut(file_menu.get_item_index(0), _build_shortcut(KEY_N))
+	file_menu.add_item("New", MenuItem.NEW)
+	file_menu.set_item_shortcut(file_menu.get_item_index(MenuItem.NEW), _build_shortcut(KEY_N))
 	
 	file_menu.add_separator("", 1000)
 	
-	file_menu.add_item("Open...", 1)
-	file_menu.set_item_shortcut(file_menu.get_item_index(1), _build_shortcut(KEY_O))
+	file_menu.add_item("Open...", MenuItem.OPEN)
+	file_menu.set_item_shortcut(file_menu.get_item_index(MenuItem.OPEN), _build_shortcut(KEY_O))
 	
-	file_menu.add_submenu_node_item("Open Recent", open_recent_menu, 2)
+	file_menu.add_submenu_node_item("Open Recent", open_recent_menu, MenuItem.OPEN_RECENT)
 	
 	file_menu.add_separator("", 1001)
 	
-	file_menu.add_item("Save", 3)
-	file_menu.set_item_shortcut(file_menu.get_item_index(3), _build_shortcut(KEY_S))
+	file_menu.add_item("Save", MenuItem.SAVE)
+	file_menu.set_item_shortcut(file_menu.get_item_index(MenuItem.SAVE), _build_shortcut(KEY_S))
 	
-	file_menu.add_item("Save As...", 4)
-	file_menu.set_item_shortcut(file_menu.get_item_index(4), _build_shortcut(KEY_S, true, true))
+	file_menu.add_item("Save As...", MenuItem.SAVE_AS)
+	file_menu.set_item_shortcut(file_menu.get_item_index(MenuItem.SAVE_AS), _build_shortcut(KEY_S, true, true))
 	
 	file_menu.add_separator("", 1002)
 	
-	file_menu.add_item("Exit", 5)
-	file_menu.set_item_shortcut(file_menu.get_item_index(5), _build_shortcut(KEY_Q))
+	file_menu.add_item("Exit", MenuItem.EXIT)
+	file_menu.set_item_shortcut(file_menu.get_item_index(MenuItem.EXIT), _build_shortcut(KEY_Q))
 	
 	about_menu.set_item_text(0, "%s v%s" % [ProjectSettings.get_setting("application/config/name"), ProjectSettings.get_setting("application/config/version")])
 	
@@ -40,22 +42,21 @@ func _ready():
 
 func _on_file_menu_id_pressed(id: int) -> void:
 	match id:
-		0:
-			# New
+		MenuItem.NEW:
 			Session.reset()
-		1:
+		MenuItem.OPEN:
 			# Open
 			open_file_dialog.show()
-		3:
+		MenuItem.SAVE:
 			# Save
 			if Session.currently_open_file != "":
 				Session.save_flpx()
 			else:
 				save_file_dialog.show()
-		4:
+		MenuItem.SAVE_AS:
 			# Save As
 			save_file_dialog.show()
-		5:
+		MenuItem.EXIT:
 			# Exit
 			get_tree().quit()
 
