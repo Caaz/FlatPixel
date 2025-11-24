@@ -45,19 +45,15 @@ func _on_file_menu_id_pressed(id: int) -> void:
 		MenuItem.NEW:
 			Session.reset()
 		MenuItem.OPEN:
-			# Open
 			open_file_dialog.show()
 		MenuItem.SAVE:
-			# Save
 			if Session.currently_open_file != "":
 				Session.save_flpx()
 			else:
 				save_file_dialog.show()
 		MenuItem.SAVE_AS:
-			# Save As
 			save_file_dialog.show()
 		MenuItem.EXIT:
-			# Exit
 			get_tree().quit()
 
 func _on_open_recent_menu_index_pressed(idx: int) -> void:
